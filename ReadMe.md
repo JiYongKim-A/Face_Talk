@@ -52,9 +52,15 @@ WebRTC 기술이란 무엇이고 어떠한 방식으로 두 peer 간의 영상�
 
 
 Youtube 영상,  https://www.youtube.com/watch?v=DvlyzDZDEq4&t=250s,
+
 Github , https://github.com/WebDevSimplified/Zoom-Clone-With-WebRTC
+
 티스토리, https://withseungryu.tistory.com/129 
+
 peerjs, https://peerjs.com 
+
 softWare Architect, https://www.lesstif.com/software-architect/openssl-command-tip-7635159.html 
+
 1분코딩, https://studiomeal.com/archives/197 
+
 HTML5 UP https://html5up.net/ 
