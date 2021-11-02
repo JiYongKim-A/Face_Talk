@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="#{page.documentsDetailModify.projectName}">Face Talk</title>
+	<link href="images/symbol.png" rel="shortcut icon" type="image/x-icon">
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+	<noscript>
+		<link rel="stylesheet" href="css/noscript.css" th:href="@{/css/noscript.css}" />
+	</noscript>
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+	/>
+	<style>
+		.field-error{
+
+			border-color: #dc3545;
+
+			color: #dc3545;
+
+		}
+	</style>
+
+
+</head>
+
+<body class="is-preload">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<h1 id="logo"><a href="#header" th:text="#{page.documentsDetailModify.projectName}" th:href="@{/}">Face Talk</a></h1>
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html" th:href="@{/myDocuments}" th:text="#{page.documentsDetailModify.toList}">목록으로</a></li>
+					
+					<li><a href="#" class="button " th:href="@{/logout}" th:text="#{button.documentsDetailModify.logout}">로그아웃</a></li>
+				</ul>
+			</nav>
+		</header>
+
+
+		<div id="main" class="wrapper style1">
+			<div class="container">
+				<header class="major">
+					<section id="content">
+
+						<h2 th:text="#{page.documentsDetailModify.modifyTitle}" style="text-align: left">==문서 수정==</h2>
+
+						<form th:action  th:object="${note}" method="post">
+
+									<h3 th:text="#{label.documentsDetailModify.title}">제목</h3>
+									<input class=""  type="text" name="title" th:placeholder="#{placeholder.documentsDetailModify.title}" th:field="*{title}"  style="text-align: center;" >
+									<div class="field-error" th:errors="*{title}"/>
+									<br>
+									<h3 th:text="#{label.documentsDetailModify.text}">세부내용</h3>
+									<pre><textarea  name="" id="" cols="30" rows="10" th:placeholder="#{placeholder.documentsDetailModify.text}" placeholder="내용을 작성해 주세요." style="resize: none;" th:field="*{text}"  ></textarea></pre>
+		<!--						</form>-->
+
+								<div class="content-div">
+								<table >
+									<thead st>
+										<tr>
+											<th style="width: 30%;" th:text="#{label.documentsDetailModify.nickName}">닉네임 :</th>
+											<th style="text-align: left;" th:field="*{nickName}" th:text="*{nickName}">[ 감자dsfsdfdsf ]</th>
+										</tr>
+									</thead>
+								</table>
+
+								<table>
+									<thead>
+										<tr>
+
+											<th style="width: 42%;" th:text="#{label.documentsDetailModify.updateDate}">업데이트 날짜 :</th>
+											<th style="text-align: left;" th:field="*{date}" th:text="*{date}">[ 09/28 12:30 ]</th>
+										</tr>
+									</thead>
+								</table>
+								<table >
+									<thead>
+										<tr>
+											<th style="width: 40%;" th:text="#{label.documentsDetailModify.roomCode}">회의방 코드 : </th>
+											<th style="text-align: left; " th:field="*{roomUUID}" th:text="*{roomUUID}">[ 0csds ]</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+								<div>
+									<div class="col-6 col-12-xsmall">
+										<ul class="actions fit">
+											<li>
+												<form th:action="@{/myDocuments/detail/remove/{manageSeq}(manageSeq=${note.manageSeq})}" method="post">
+													<button href="#" class="button fit" th:text="#{button.documentsDetailModify.remove}">삭제</button>
+												</form>
+											</li>
+											<li><button type="submit" href="#" class="button primary fit" th:href="@{/myDocuments/detail/modify/{manageSeq}(manageSeq=*{manageSeq})}" th:text="#{button.documentsDetailModify.modifyComplete}" >수정</button></li>
+										</ul>
+									</div>
+								</div>
+						</form>
+					</section>
+				</header>
+
+				<!-- Content -->
+
+
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<ul class="icons">
+				<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+				<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+			</ul>
+			<ul class="copyright">
+				<li>&copy; Untitled. All rights reserved.</li>
+				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+	<script src="js/jquery.scrolly.min.js" th:src="@{/js/jquery.scrolly.min.js}"></script>
+	<script src="js/jquery.dropotron.min.js" th:src="@{/js/jquery.dropotron.min.js}"></script>
+	<script src="js/jquery.scrollex.min.js" th:src="@{/js/jquery.scrollex.min.js}"></script>
+	<script src="js/browser.min.js" th:src="@{/js/browser.min.js}"></script>
+	<script src="js/breakpoints.min.js" th:src="@{/js/breakpoints.min.js}"></script>
+	<script src="js/util.js" th:src="@{/js/util.js}"></script>
+	<script src="js/main.js" th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

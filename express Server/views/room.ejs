@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="main.css">
+  <script>
+    // script.js 에서 nickName 값을 받아와서 html에서 사용하기위해 작성
+    const ROOM_ID = "<%= roomId %>"
+    const nickName = "<%= nickName %>"
+  </script>
+
+  <!-- 화상회의 기능 라이브러리와 연결시키는 스크립트 -->
+  <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
+
+  <!-- 소켓사용을 위해 연결시키는 스크립트 -->
+  <script src="/socket.io/socket.io.js" defer></script>
+
+  <!-- 여기 html과 script.js와 연결시키는 스크립트 -->
+  <script type="" src="script.js" defer></script>
+
+
+  <title>Face Talk</title>
+</head>
+
+<body>
+  <header id="header">
+     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%<= 스프링 서버 url(ip) 변경시 함께 변경할것 -->
+   <h1 id='logo'><a href="https://192.168.0.27:8080"> 회의 나가기</a></h1>
+    <nav id='nav'>
+      <ul>
+        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%<= 스프링 서버 url(ip) 변경시 함께 변경할것 -->
+        <li><a href="https://192.168.0.27:8080/myMessage" target="blank"><img src="./message.png"style="position: relative;left:1px; top:12px; width: 60px; height: 40px;"></a></li>
+        <li>
+          <input type="text" id="url" name="url" class="url" value="" readonly>
+          </li>
+          <li>
+          <button class="button primary" type="text" id="copyCode">코드 복사</button>
+          <script>
+            // 코드 복사버튼 기능을 위한 스크립트 구문
+            document.getElementById("copyCode").onclick = function copyfunction() {
+              const codeText = document.getElementById("url");
+              codeText.select();
+              document.execCommand('copy');
+            }
+          </script>
+          
+          <script language="javascript">
+            // 위의 url코드 박스에 접속 코드 박스에 값을 넣어주는 스크립트 위치  
+            var url = document.location.href;
+            var urlCode = url.substring(url.indexOf(':3000/') + 6)  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% <= node 포트 변경시 여기도 함께 변경할 것!
+            document.getElementById("url").value = urlCode;
+          </script>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="wrapper style1">
+
+    <div class="container">
+
+      <section class="row gtr-50 gtr-uniform">
+        <div id="video-grid"></div>
+      </section>
+
+      <section class="row">
+        <div class="col-5 col-12-xsmall">
+          <div id='localVideo'></div>
+          <div class="title">
+            <button id="muteButton" class="button primary small" onclick="toggleMute()"> <img id="img1" src="On.png"
+                alt="이미지" width="30px" height="35px"></button>
+            <input type="text" id="nick" name="nick" class="nick" value="" readonly>
+            <script language="javascript">
+              // 닉네임 박스에 닉네임 값 넣어주는 스크립트 코드 위치 
+              document.getElementById("nick").value = nickName;
+            </script>
+          </div>
+        </div>
+
+        <div class="col-7 col-12-xsmall">
+          <div>
+            <h4>회의 제목</h4>
+            <input type="text" class="titleBox" id="title" name="title" placeholder="회의 제목을 입력하세요."></input>
+            <div>
+              <h3>정리내용</h3>
+              <textarea class="textBox" id="text" name="text" placeholder="정리 내용을 입력하세요."></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+</body>
+
+</html>

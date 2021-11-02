@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="#{page.documentsDetail.projectName}">Face Talk</title>
+	<link href="images/symbol.png" rel="shortcut icon" type="image/x-icon">
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+	<noscript>
+		<link rel="stylesheet" href="css/noscript.css" th:href="@{/css/noscript.css}" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<h1 id="logo"><a href="#header" th:text="#{page.documentsDetail.projectName}" th:href="@{/}">Face Talk</a></h1>
+			<nav id="nav">
+				<ul>
+					<li><a href="index.html" th:href="@{/myDocuments}" th:text="#{page.documentsDetail.toList}">목록으로</a></li>
+					
+					<li><a href="#" class="button " th:href="@{/logout}" th:text="#{button.documentsDetail.logout}">로그아웃</a></li>
+				</ul>
+			</nav>
+			<link
+					rel="stylesheet"
+					href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+			/>
+		</header>
+
+
+		<div id="main" class="wrapper style1">
+			<div class="container">
+				<header class="major">
+					<section id="content" th:object="${note}">
+
+						<h2 th:text="#{label.documentsDetail.title}">제목</h2>
+						<input class="" value="asd" type="text" name="" th:value="*{title}" style="text-align: center;" readonly>
+						<br>
+						<h2 th:text="#{label.documentsDetail.text}">세부내용</h2>
+						<pre><textarea  name="" id="" cols="30" rows="10" th:placeholder="#{placeholder.documentsDetail.text}" placeholder="내용 없음" style="resize: none;" th:text="*{text}"  readonly></textarea></pre>
+						<div class="content-div">
+						<table >
+							<thead st>
+								<tr>
+									<th style="width: 30%;" th:text="#{label.documentsDetail.nickName}">닉네임 :</th>
+									<th style="text-align: left;" th:text="*{nickName}">[ 감자dsfsdfdsf ]</th>
+								</tr>
+							</thead>
+						</table>
+
+						<table>
+							<thead>
+								<tr>
+									
+									<th style="width: 42%;" th:text="#{label.documentsDetail.updateDate}">업데이트 날짜 :</th>
+									<th style="text-align: left;" th:text="*{date}">[ 09/28 12:30 ]</th>
+								</tr>
+							</thead>
+						</table>
+						<table >
+							<thead>
+								<tr>
+									<th style="width: 40%;" th:text="#{label.documentsDetail.roomCode}">회의방 코드 : </th>
+									<th style="text-align: left; " th:text="*{roomUUID}">[ 0csds ]</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+						<div>
+							<div class="col-6 col-12-xsmall">
+								<ul class="actions fit">
+									<li>
+										<form class="form" th:action="@{/myDocuments/detail/remove/{manageSeq}(manageSeq=${note.manageSeq})}" method="post">
+											<button href="#" class="button fit"  th:text="#{button.documentsDetail.remove}">삭제</button>
+										</form>
+									</li>
+
+									<li><a href="#" class="button primary fit" th:href="@{/myDocuments/detail/modify/{manageSeq}(manageSeq=*{manageSeq})}" th:text="#{button.documentsDetail.modify}" >수정</a></li>
+
+								</ul>
+							</div>
+						</div>
+					</section>
+				</header>
+
+				<!-- Content -->
+
+
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<ul class="icons">
+				<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+				<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+			</ul>
+			<ul class="copyright">
+				<li>&copy; Untitled. All rights reserved.</li>
+				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+	<script src="js/jquery.scrolly.min.js" th:src="@{/js/jquery.scrolly.min.js}"></script>
+	<script src="js/jquery.dropotron.min.js" th:src="@{/js/jquery.dropotron.min.js}"></script>
+	<script src="js/jquery.scrollex.min.js" th:src="@{/js/jquery.scrollex.min.js}"></script>
+	<script src="js/browser.min.js" th:src="@{/js/browser.min.js}"></script>
+	<script src="js/breakpoints.min.js" th:src="@{/js/breakpoints.min.js}"></script>
+	<script src="js/util.js" th:src="@{/js/util.js}"></script>
+	<script src="js/main.js" th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

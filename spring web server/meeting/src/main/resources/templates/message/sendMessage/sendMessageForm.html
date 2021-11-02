@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Left Sidebar - Landed by HTML5 UP</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+	<noscript>
+		<link rel="stylesheet" href="css/noscript.css" th:href="@{/css/noscript.css}" />
+	</noscript>
+
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+	/>
+
+	<style>
+		.right{
+			width: 50%;
+			float: right;
+		}
+
+		.left{
+			width: 50%;
+			float: left;
+		}
+		.field-error{
+			border-color: #dc3545;
+
+			color: #dc3545;
+		}
+		.object-error{
+			border-color: #dc3545;
+
+			color: #dc3545;
+			font-size: 1.2em;
+
+		}
+
+	</style>
+
+
+</head>
+
+<body class="is-preload">
+	<div id="page-wrapper">
+
+		<header id="header">
+			<div class="nav-bar1">
+				<h1 id="logo"><a th:href="@{/}">Face Talk</a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a th:href="@{/}">메인화면</a></li>
+						<li>
+							<form th:action="@{/logout}" method="post">
+								<button class="button small fit" type="submit">Logout</button>
+							</form>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<div id="main" class="wrapper style1">
+			
+
+			<div class="container">
+				<header class="major">
+
+				
+                    <section>
+						<h2>쪽지 보내기</h2>
+
+						<form  th:action th:object="${sendMessageForm}" method="post">
+
+							<div th:if="${#fields.hasGlobalErrors()}">
+
+								<p class="object-error" th:each="err : ${#fields.globalErrors()}"
+								   th:text="${err}" style="text-align: center;">전체 오류 메시지</p>
+							</div>
+
+								<div>
+									<h3 style="text-align: left;">보내는사람 닉네임</h3>
+									<input type="text" id="sender" name="sender" th:value="${sender}" style="width: 50%; text-align: center;" readonly>
+									<br>
+								</div>
+
+								<div>
+									<h3 style="text-align: left;">쪽지 제목</h3>
+									<input type="text"  th:field="*{title}">
+									<div class="field-error" th:errors="*{title}"></div>
+									<br>
+								</div>
+
+								<div>
+									<h3 style="text-align: left;">쪽지 내용</h3>
+									<textarea style="width: 100%; height: 600px; resize: none;" th:field="*{message}">
+
+
+									</textarea>
+									<br>
+									<div>
+										<h3 style="text-align: left;">받는사람 닉네임</h3>
+										<textarea th:if="${recipient == null}" style="resize: none;" th:field="*{recipient}" ></textarea>
+										<textarea th:if="${recipient != null}" style="resize: none;" th:field="*{recipient}" th:text="recipient" ></textarea>
+										<p style="text-align: left; color: grey;">다중 전송시 ,(쉼표)를 통해 구분해주세요</p>
+										<div class="field-error" th:errors="*{recipient}"></div>
+
+										<br>
+									</div>
+								</div>
+
+							<button class="button primary " type="submit" style="float: right;">쪽지 보내기</button>
+
+						</form>
+
+					</section>
+				</header>
+			</div>
+		</div>
+		
+
+	</div>
+
+	<footer id="footer">
+		<ul class="icons">
+			<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+			<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+			<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+			<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+			<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+			<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+		</ul>
+		<ul class="copyright">
+			<li>&copy; Untitled. All rights reserved.</li>
+			<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+		</ul>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+	<script src="js/jquery.scrolly.min.js" th:src="@{/js/jquery.scrolly.min.js}"></script>
+	<script src="js/jquery.dropotron.min.js" th:src="@{/js/jquery.dropotron.min.js}"></script>
+	<script src="js/jquery.scrollex.min.js" th:src="@{/js/jquery.scrollex.min.js}"></script>
+	<script src="js/browser.min.js" th:src="@{/js/browser.min.js}"></script>
+	<script src="js/breakpoints.min.js" th:src="@{/js/breakpoints.min.js}"></script>
+	<script src="js/util.js" th:src="@{/js/util.js}"></script>
+	<script src="js/main.js" th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

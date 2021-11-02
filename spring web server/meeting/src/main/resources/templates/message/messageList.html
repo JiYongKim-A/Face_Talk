@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Face Talk</title>
+	<link href="images/symbol.png" rel="shortcut icon" type="image/x-icon">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+	<noscript>
+		<link rel="stylesheet" href="css/noscript.css" th:href="@{/css/noscript.css}" />
+	</noscript>
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+	/>
+	<style>
+		.right{
+			width: 50%;
+			float: right;
+		}
+
+		.left{
+			width: 50%;
+			float: left;
+		}
+		.yes{
+			color: #39c088;
+		}
+		.no{
+			color: #dc3545;
+		}
+
+
+	</style>
+</head>
+
+<body class="is-preload">
+	<div id="page-wrapper">
+
+		<header id="header">
+			<div class="nav-bar1">
+				<h1 id="logo"><a th:href="@{/}">Face Talk</a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a th:href="@{/}">홈으로</a></li>
+						<li>
+							<form th:action="@{/logout}" method="post">
+								<button class="button small fit" type="submit">Logout</button>
+							</form>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<div id="main" class="wrapper style1">
+			
+
+			<div class="container">
+				<header class="major">
+
+				
+                    <section>
+
+
+                        <div class="table-wrapper" >
+
+							<div>
+								<h3>쪽지함</h3>
+								
+								<table>
+									<thead>
+										<tr>
+											<th style="width: 20%;text-align: center">보낸사람 닉네임</th>
+											<th style="width: 20%;text-align: center">보낸 날짜</th>
+											<th style="width: 35%;text-align: center">제목</th>
+											<th style="width: 10%;text-align: center">열람</th>
+											<th style="width: 15%;text-align: center">쪽지 삭제</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr th:if="${messages==null}">
+											<td></td>
+											<td>쪽지 없음</td>
+											<td></td>
+											<td></td>
+										</tr>
+
+										<tr th:each="message : ${messages}" th:if="${messages!=null}">
+												<td > <a th:href="@{/myMessage/readMessage/{manageSeq}(manageSeq=${message.manageSeq})}" th:text="${message.sender}"></a> </td>
+												<td > <a th:href="@{/myMessage/readMessage/{manageSeq}(manageSeq=${message.manageSeq})}" th:text="${message.date}"></a></td>
+												<td  ><a th:href="@{/myMessage/readMessage/{manageSeq}(manageSeq=${message.manageSeq})}" th:text="${message.title}"></a></td>
+												<td th:if="${message.isRead=='N'}" th:class="no" th:text="${message.isRead}" >No</td>
+												<td th:if="${message.isRead=='Y'}" th:class="yes" th:text="${message.isRead}" >No</td>
+												<td><a class="button" th:href="@{/myMessage/removeMessage/{manageSeq}(manageSeq=${message.manageSeq})}">삭제</a></td>
+										</tr>
+									</tbody>
+								
+								</table>
+								<a class="button primary" style="float: right;" th:href="@{/myMessage/sendMessage}">쪽지 보내기</a>
+								
+							
+							</div>
+
+
+						</div>
+
+				
+					</section>
+				</header>
+			</div>
+		</div>
+		
+
+	</div>
+
+	<footer id="footer">
+		<ul class="icons">
+			<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+			<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+			<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+			<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+			<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+			<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+		</ul>
+		<ul class="copyright">
+			<li>&copy; Untitled. All rights reserved.</li>
+			<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+		</ul>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+	<script src="js/jquery.scrolly.min.js" th:src="@{/js/jquery.scrolly.min.js}"></script>
+	<script src="js/jquery.dropotron.min.js" th:src="@{/js/jquery.dropotron.min.js}"></script>
+	<script src="js/jquery.scrollex.min.js" th:src="@{/js/jquery.scrollex.min.js}"></script>
+	<script src="js/browser.min.js" th:src="@{/js/browser.min.js}"></script>
+	<script src="js/breakpoints.min.js" th:src="@{/js/breakpoints.min.js}"></script>
+	<script src="js/util.js" th:src="@{/js/util.js}"></script>
+	<script src="js/main.js" th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+서버 실행시 수정사항
+
+================>
+
+Server.js 에서 변경 사항 
+
+1.  server.js 의 server.listen(3000) 부분에
+     자신이 사용할 포트 번호를 변경해주세요
+      ( 기본 3000 포트 사용)
+
+2. zoom_final_updated 폴더에 SSL을 위한 
+   private key와 cert 넣은후 
+
+    const options = {
+        key: fs.readFileSync('./ca.key'),   <---- 자신의 key로 변경
+        cert: fs.readFileSync('./ca.crt')    <---- 자신의 cert로 변경
+      };
+
+option을 변경해주세요
+
+
+
+================>
+
+Script.js 에서 변경사항
+
+1. script.js에서   fetch('https://192.168.0.27:8080/saveData' 의 
+[ 192.168.0.27:8080 ] => ip 주소를 Spring web 서버 URL혹은 ip로 변경해주세요
+
+
+
+=================>
+
+room.ejs 에서의 변경사항
+
+1.  <h1 id='logo'><a href="https://192.168.0.27:8080"> 회의 나가기</a></h1>
+ [ 192.168.0.27:8080 ] => ip 주소를 Spring web 서버 URL혹은 ip로 변경해주세요
+
+
+2.  <li><a href="https://192.168.0.27:8080/myMessage" target="blank">
+[ 192.168.0.27:8080 ] => ip 주소를 Spring web 서버 URL혹은 ip로 변경해주세요
+
+
+3. var urlCode = url.substring(url.indexOf(':3000/') + 6)
+Express 서버에서 사용하는 포트 번호로 변경해 주세요 (기본 3000 포트)

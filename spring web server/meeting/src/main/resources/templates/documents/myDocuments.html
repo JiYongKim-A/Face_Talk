@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="#{page.documents.projectName}">Face Talk</title>
+	<link href="images/symbol.png" rel="shortcut icon" type="image/x-icon">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+	<noscript>
+		<link rel="stylesheet" href="css/noscript.css" th:href="@{/css/noscript.css}" />
+	</noscript>
+
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+	/>
+
+</head>
+
+<body class="is-preload">
+	<div id="page-wrapper">
+
+		<header id="header">
+			<div class="nav-bar1">
+				<h1 id="logo"><a href="#header" th:text="#{page.documents.projectName}" th:href="@{/}">쿄호 젤리</a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html" th:text="#{page.documents.main}" th:href="@{/}".>메인화면</a></li>
+						<li>
+							<form th:action="@{/logout}" method="post">
+								<button class="button small fit" type="submit" th:text="#{button.documents.logout}">Logout</button>
+							</form>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<div id="main" class="wrapper style1">
+			<div class="container">
+				<header class="major">
+                    <section>
+                        <h2 th:text="#{page.documents.documents}">내 문서함</h2>
+						<br>
+						
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; width: 221px;" th:text="#{label.documents.date}">날짜</th>
+										<th style="text-align: center; width: 221px;" th:text="#{label.documents.roomId}">방구분자</th>
+                                        <th style="text-align: center; width: 221px;" th:text="#{label.documents.title}">회의 제목</th>
+                                        <th style="text-align: center; width: 221px;" th:text="#{label.documents.manageSeq}">관리 번호</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="note :${notes}" th:if="${notes!=null}">
+                                        <td th:text="${note.date}" >날짜</td>
+										<td th:text="${note.roomUUID}" >방 구분자</td>
+                                        <td><a href="item.html" th:href="@{/myDocuments/detail/{documentsNum}(documentsNum=${note.manageSeq})}" th:text="${note.title}">회의 제목</a></td>
+                                        <td><a href="item.html" th:href="@{/myDocuments/detail/{documentsNum}(documentsNum=${note.manageSeq})}" th:text="${note.manageSeq}">관리 번호</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+						</div>
+					</section>
+				</header>
+			</div>
+		</div>
+
+
+
+
+	</div>
+	<footer id="footer">
+		<ul class="icons">
+			<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+			<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+			<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+			<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+			<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+			<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+		</ul>
+		<ul class="copyright">
+			<li>&copy; Untitled. All rights reserved.</li>
+			<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+		</ul>
+	</footer>
+
+
+	<!-- Scripts -->
+	<script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+	<script src="js/jquery.scrolly.min.js" th:src="@{/js/jquery.scrolly.min.js}"></script>
+	<script src="js/jquery.dropotron.min.js" th:src="@{/js/jquery.dropotron.min.js}"></script>
+	<script src="js/jquery.scrollex.min.js" th:src="@{/js/jquery.scrollex.min.js}"></script>
+	<script src="js/browser.min.js" th:src="@{/js/browser.min.js}"></script>
+	<script src="js/breakpoints.min.js" th:src="@{/js/breakpoints.min.js}"></script>
+	<script src="js/util.js" th:src="@{/js/util.js}"></script>
+	<script src="js/main.js" th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

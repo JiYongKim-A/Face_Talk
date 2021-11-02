@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<title th:text="#{title}">Face Talk</title>
+		<link href="images/symbol.png" rel="shortcut icon" type="image/x-icon">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+		<link rel="stylesheet" href="css/main.css"
+		th:href="@{/css/main.css}"/>
+
+		<noscript><link rel="stylesheet" href="css/noscript.css"
+		th:href="@{/css/noscript.css}"/></noscript>
+
+		<link
+				rel="stylesheet"
+				href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+		/>
+		
+	</head>
+	<body class="is-preload ">
+
+		<div id="page-wrapper">
+			<header id="header">
+				<div class="nav-bar1">
+					<h1 id="logo" ><a href="#header" th:text="#{page.home.projectName}" th:href="@{/}">Face Talk</a></h1>
+					<nav id="nav">
+						<ul>
+							<li style="font-size: large;" th:text="#{page.loggedHome.nickName(${sessionForm.nickName})}">'사용자'님</li>
+							<li>
+								<a href="login.html" th:href="@{/myDocuments}" class="button primary small fit" th:text="#{button.myPage}">MyDocuments</a>
+							</li>
+
+							<li th:if="${check=='N'}" ><a th:href="@{/myMessage}"><img  style="position: relative;left:1px; top:16px; width: 60px; height: 40px;" th:src="@{images/message2.jpg}"> </a></li>
+							<li th:if="${check=='Y'}" ><a th:href="@{/myMessage}"><img  style="position: relative;left:1px; top:16px; width: 60px; height: 40px;"th:src="@{images/message.png}"> </a></li>
+							<li>
+								<form th:action="@{/logout}" method="post">
+									<button class="button small fit" type="submit" th:text="#{button.logout}">Logout</button>
+								</form>
+							</li>
+
+<!--							<li><a href="login.html" th:href="@{/logout}" class="button">Logout</a></li>-->
+						</ul>
+
+
+					</nav>
+				</div>
+			</header>
+			<section id="banner">
+				<div class="content">
+					<header>
+						<h2 style="font-family:serif; font-style:unset; color:lightcoral ;" th:text="#{page.home.projectName}">Face Talk</h2>
+
+						<p style="font-family:sans-serif;" th:text="#{page.home.additional}">website only</p>
+					</header>
+					<div><img src="/images/symbol.png" width="600px" height="500px" alt="" /></div>
+				</div>
+				<a href="#one" class="goto-next scrolly">Next</a>
+			</section>
+				
+				<section id="one" class="spotlight style1 bottom">
+					<span class="image fit main"><img src="images/angry.jpg"  alt="" /></span>
+					
+					<div class="content">
+						<div class="container">
+							<div class="row">
+								<div class="col-4 col-12-medium">
+									<header>
+										<h2 th:text="#{page.home.startMeet}">새로운 회의 시작하기</h2>
+										<p th:text="#{page.home.startMeetExplain}">[ 새로운 회의방 생성 ]</p>
+									</header>
+								</div>
+								
+								<div class="col-4 col-12-medium">
+									<a  value="Create room"  th:href="@{/start}" th:text="#{button.startMeeting}" class="button primary" > hi</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<a href="#two" class="goto-next scrolly">Next</a>
+				</section>
+				<section id="two" class="wrapper style2 special fade">
+					<div class="container">
+						<header>
+							<h2 th:text="#{page.home.joinMeet}">회의 참가하기</h2>
+							<p th:text="#{page.home.startMeetExplain}"> [ 회의방 코드로 참가 ]</p>
+						</header>
+						<form method="post" action="#" th:action="@{/join}" class="cta">
+							<div class="row gtr-uniform gtr-50">
+								<div class="col-8 col-12-xsmall"><input type="text" name="code" id="code" th:placeholder="#{placeholder.joinMeet}" placeholder="회의방 코드를 입력하세요."/></div>
+								<div class="col-4 col-12-xsmall"><input type="submit" value="회의참가!" th:value="#{button.joinMeeting}" class="fit primary" /></div>
+							</div>
+						</form>
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+						<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+						<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+			<script src="js/jquery.scrolly.min.js" th:src="@{/js/jquery.scrolly.min.js}"></script>
+			<script src="js/jquery.dropotron.min.js" th:src="@{/js/jquery.dropotron.min.js}"></script>
+			<script src="js/jquery.scrollex.min.js" th:src="@{/js/jquery.scrollex.min.js}"></script>
+			<script src="js/browser.min.js" th:src="@{/js/browser.min.js}"></script>
+			<script src="js/breakpoints.min.js" th:src="@{/js/breakpoints.min.js}"></script>
+			<script src="js/util.js" th:src="@{/js/util.js}"></script>
+			<script src="js/main.js" th:src="@{/js/main.js}"></script>
+
+	</body>
+</html>

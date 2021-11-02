@@ -1,0 +1,8 @@
+서버 실행시 변경사항
+
+1. application.properties 에서 자신의 맞는 형식으로 변경해주세요
+* DB 연동 설정 변경
+* SSL 연동 설정 변경
+
+2. config.properties 에서 urlPath 값을
+자신의 Express 화상회의 서버 URL으로 변경해주세요 

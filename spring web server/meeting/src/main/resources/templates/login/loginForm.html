@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="#{title}">Face Talk</title>
+	<link href="images/symbol.png" rel="shortcut icon" type="image/x-icon">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+	<link rel="stylesheet" href="css/main.css"
+		  th:href="@{/css/main.css}"/>
+
+	<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+	/>
+
+	<noscript><link rel="stylesheet" href="css/noscript.css"
+					th:href="@{/css/noscript.css}"/></noscript>
+	<style>
+
+		.container {
+
+			max-width: 560px;
+
+		}
+		.field-error{
+			border-color: #dc3545;
+
+			color: #dc3545;
+		}
+		.object-error{
+			border-color: #dc3545;
+
+			color: #dc3545;
+			font-size: 1.2em;
+
+		}
+
+	</style>
+
+</head>
+
+<body class="is-preload">
+	<div id="page-wrapper">
+
+		<header id="header">
+			<div class="nav-bar1">
+				<h1 id="logo"><a href="#header" th:href="@{/}" th:text="#{page.login.projectName}">Face Talk</a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html" th:href="@{/}" th:text="#{button.login.toHome}">Home</a></li>
+						<li><a href="membership.html" class="button primary" th:href="@{/signUp}" th:text="#{button.login.signUp}">Sign up</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<div id="main" class="wrapper style1">
+			<div class="container">
+				<header class="major">
+					<h2 th:text="#{page.login.loginTitle}">Login</h2>
+					<p th:text="#{page.login.loginExplain}">Please enter your login information</p>
+				</header>
+				
+			</div>
+		</div>
+		<section class="container">
+
+			<form action="kk" th:action th:object="${loginForm}" method="post">
+
+				<div th:if="${#fields.hasGlobalErrors()}">
+
+					<p class="object-error" th:each="err : ${#fields.globalErrors()}"
+					   th:text="${err}" style="text-align: center;">전체 오류 메시지</p>
+				</div>
+
+				<div class="col-4 col-6-xsmall">
+					<label for="loginId" th:text="#{label.login.ID}">ID</label>
+
+					<input type="text" name="loginId" id="loginId" value=""
+						   th:field="*{loginId}"
+						   th:errorclass="field-error"
+						   placeholder="Enter your ID" th:placeholder="#{placeholder.login.ID}" />
+				</div>
+				<div class="field-error" th:errors="*{loginId}"></div>
+			
+				<br>
+				<div class="col-4 col-6-xsmall">
+					<label for="password" th:text="#{label.login.PW}">PW</label>
+					<input type="password" name="password"
+						   th:field="*{password}"
+						   th:errorclass="field-error"
+						   id="password" value="" placeholder="Enter your password" th:placeholder="#{placeholder.login.PW}" />
+					<div class="field-error" th:errors="*{password}"></div>
+				</div>
+			
+				<br>
+				<header class="mine"></header>
+				<div>
+					<button type="submit" class="button primary fit" style="float: right;" th:text="#{button.login.tryLogin}">Login</button>
+				</div>
+				<br>
+				<br>
+				
+			</form>
+			
+		
+		</section>
+		<!-- Footer -->
+		 <footer id="footer">
+			<ul class="icons">
+				<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+				<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+			</ul>
+			<ul class="copyright">
+				<li>&copy; Untitled. All rights reserved.</li>
+				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+	<script src="js/jquery.scrolly.min.js" th:src="@{/js/jquery.scrolly.min.js}"></script>
+	<script src="js/jquery.dropotron.min.js" th:src="@{/js/jquery.dropotron.min.js}"></script>
+	<script src="js/jquery.scrollex.min.js" th:src="@{/js/jquery.scrollex.min.js}"></script>
+	<script src="js/browser.min.js" th:src="@{/js/browser.min.js}"></script>
+	<script src="js/breakpoints.min.js" th:src="@{/js/breakpoints.min.js}"></script>
+	<script src="js/util.js" th:src="@{/js/util.js}"></script>
+	<script src="js/main.js" th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>
