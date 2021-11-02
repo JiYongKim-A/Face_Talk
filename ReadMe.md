@@ -17,10 +17,10 @@ Face Talk 소개
 
 
 ![image](https://user-images.githubusercontent.com/81874493/139874695-35573259-9400-41a4-ae5d-5f62475d85f9.png)
-메인 페이지 
+
 
 ![화상회의 사진](https://user-images.githubusercontent.com/81874493/139874765-5db33fb7-b5eb-4d99-931c-d7e425c10507.JPG)
-화상회의 페이지
+
 
 
 
@@ -47,3 +47,14 @@ WebRTC 기술이란 무엇이고 어떠한 방식으로 두 peer 간의 영상�
 두 번째, AWS를 이용하여 프로젝트 배포해 외부에서 Domain을 통한 외부 접근이 가능하도록 개선할 예정입니다.
 세 번째, 추후 사용해보며 사용자들의 불편했던 점 과 필요한 기능들에 대해 적극 반영하여 개선해볼 예정입니다.
 
+
+참고 자료
+
+
+Youtube 영상,  https://www.youtube.com/watch?v=DvlyzDZDEq4&t=250s,
+Github , https://github.com/WebDevSimplified/Zoom-Clone-With-WebRTC
+티스토리, https://withseungryu.tistory.com/129 
+peerjs, https://peerjs.com 
+softWare Architect, https://www.lesstif.com/software-architect/openssl-command-tip-7635159.html 
+1분코딩, https://studiomeal.com/archives/197 
+HTML5 UP https://html5up.net/ 
