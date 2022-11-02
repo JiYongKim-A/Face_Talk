@@ -2,7 +2,7 @@
 const socket = io()
 const videoGrid = document.getElementById('video-grid')
 const localVideo = document.getElementById('localVideo')
-
+const dotenv = requrie('dotenv');
 
 let localStream =null;
 const myPeer = new Peer();
@@ -44,7 +44,7 @@ window.addEventListener("beforeunload", function (event) {
   var roomSection = url.substring(url.indexOf(':3000/')+6) // url에서 room UUID 값 가져옴
 
   // 스프링으로 데이터 넘기는 부분 json 사용
-  fetch('https://192.168.0.27:8080/saveData',{ // =============================================> url 변경시 같이 변경( IP 변경되면 이부분도 변경해주어야 하는곳)
+  fetch(`${process.env.SPRING_SERVER}/saveData`,{ 
     method: 'post',
     headers: {
       'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ window.addEventListener("beforeunload", function (event) {
   })
   .catch(error => console.log(error))
 });
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
   myPeer.on('call', call => {
     call.answer(stream)

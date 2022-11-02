@@ -38,7 +38,7 @@ app.get('/:room', (req, res)=>{
 // 스프링 쿠키에서 닉네임 넣고 -> 노드js에서 닉네임빼서 사용
 // 쿼리 스트링 쓰면 보안적 문제로 쿠키 사용
   var cookNickName = req.cookies.nickName
-    res.render('room',{ roomId: req.params.room, nickName:cookNickName})
+  res.render('room',{ roomId: req.params.room, nickName:cookNickName, SPRING_SERVER : process.env.SPRING_SERVER})
 })
 
 
@@ -60,4 +60,5 @@ io.on('connection', socket =>{
     })
 })
 
-server.listen(3000) // ================================> 포트 변경시 이부분 변경
+server.listen(process.env.PORT, () => console.log(process.env.PORT+`Port Server is open!!`))
+module.exports = app;

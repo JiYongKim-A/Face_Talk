@@ -27,12 +27,17 @@
 
 <body>
   <header id="header">
-     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%<= 스프링 서버 url(ip) 변경시 함께 변경할것 -->
-   <h1 id='logo'><a href="https://192.168.0.27:8080"> 회의 나가기</a></h1>
+     <h1><a id='out' href="https://testing"> 회의 나가기</a></h1>
+     <script>
+      document.getElementById('out').href = SPRING_SERVER;
+     </script>
     <nav id='nav'>
       <ul>
-        <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%<= 스프링 서버 url(ip) 변경시 함께 변경할것 -->
-        <li><a href="https://192.168.0.27:8080/myMessage" target="blank"><img src="./message.png"style="position: relative;left:1px; top:12px; width: 60px; height: 40px;"></a></li>
+        
+        <li><a id='message' href="https://testing/myMessage" target="blank"><img src="./message.png"style="position: relative;left:1px; top:12px; width: 60px; height: 40px;"></a></li>
+        <script>
+          document.getElementById('message').href = SPRING_SERVER +"/myMessage";
+         </script>
         <li>
           <input type="text" id="url" name="url" class="url" value="" readonly>
           </li>
