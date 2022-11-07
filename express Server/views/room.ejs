@@ -10,6 +10,7 @@
     // script.js 에서 nickName 값을 받아와서 html에서 사용하기위해 작성
     const ROOM_ID = "<%= roomId %>"
     const nickName = "<%= nickName %>"
+    const SPRING_SERVER = "<%= SPRING_SERVER %>"
   </script>
 
   <!-- 화상회의 기능 라이브러리와 연결시키는 스크립트 -->
@@ -98,7 +99,10 @@
       </section>
     </div>
   </main>
-
+<div id="SPRING_SERVER" style="display: none;"></div>
+<script>
+  document.getElementById('SPRING_SERVER').innerText = SPRING_SERVER;
+ </script>
 </body>
 
 </html>

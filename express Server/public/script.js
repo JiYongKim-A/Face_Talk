@@ -2,7 +2,7 @@
 const socket = io()
 const videoGrid = document.getElementById('video-grid')
 const localVideo = document.getElementById('localVideo')
-const dotenv = requrie('dotenv');
+
 
 let localStream =null;
 const myPeer = new Peer();
@@ -11,10 +11,8 @@ const myPeer = new Peer();
 var textBox = document.querySelector(".textBox") // html 정리내용 박스에 적힌 문자 받아옴
 var titleBox = document.querySelector(".titleBox") // html 회의 제목 박스에 적힌 문자 받아옴
 var nickNameBox = document.querySelector(".nick") // html 닉네임 박스에 적힌 문자 받아옴
-
-
+var spring_server = document.getElementById("SPRING_SERVER").innerText
 var userId; // 방입장시 생성되는 UUID값을 사용하기 위한 변수
-
 
 const myVideo = document.createElement('video')
 myVideo.className='localVideo'
@@ -25,7 +23,14 @@ navigator.mediaDevices.getUserMedia({
   video: true,
   audio: true
 }).then(stream => {
-  
+
+  window.onload = function() {
+    if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
+    }
+}
+
 localStream = stream // 음소거 버튼 사용위해 내 스트림을 localStream으로 지정
 
   myVideo.srcObject = stream
@@ -43,8 +48,10 @@ window.addEventListener("beforeunload", function (event) {
 
   var roomSection = url.substring(url.indexOf(':3000/')+6) // url에서 room UUID 값 가져옴
 
+  
   // 스프링으로 데이터 넘기는 부분 json 사용
-  fetch(`${process.env.SPRING_SERVER}/saveData`,{ 
+  
+  fetch(`${spring_server}/saveData`,{ 
     method: 'post',
     headers: {
       'Content-Type': 'application/json'
@@ -62,6 +69,7 @@ window.addEventListener("beforeunload", function (event) {
 
 
   myPeer.on('call', call => {
+    
     call.answer(stream)
 
     const video = document.createElement('video')

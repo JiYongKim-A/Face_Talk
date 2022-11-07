@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
 const fs = require('fs')
+const dotenv = require('dotenv')
 
 
+dotenv.config();
 
 // https 사용하기 위해 키와 crt option으로 server.js 가동
 const options = {
