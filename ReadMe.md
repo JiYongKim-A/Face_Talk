@@ -1,71 +1,105 @@
-화상채팅 웹 어플리케이션을 실행시키기 위해
-1. Spring web Server 폴더의 "서버 실행시 꼭 읽어주세요.txt" 파일을 읽고 절차에 따라 실행시켜주세요
-2. express server. 폴더의 "서버 실행시 꼭 읽어주세요.txt" 파일을 읽고 절차에 따라 실행시켜주세요
+<div align="center">
+  
+<img width="1237" alt="스크린샷 2022-11-07 오후 4 51 42" src="https://user-images.githubusercontent.com/81874493/200258634-880386eb-46c0-4f4d-b970-ad82a43dc774.png">
+
+<br>
+	
+# Face Talk	
+ <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+
+	
+</div>
 
 
 
-Face Talk 소개
+<br>
 
+## 🎬 어떤 프로젝트 인가요?
 
  ‘Face talk’ 웹 어플리케이션은 웹을 통한 화상채팅 어플리케이션 입니다.
 	
 학교 혹은 외부에서 자주 사용하는 웹 화상채팅(zoom, google meet 등)을 사용하면서 불편한 점과 추가되었으면 좋을 기능을 생각해보았지만 zoom 혹은 meet 등의 플랫폼에서 저희 의견을 반영하여 현재 문제없이 진행되고 있는 프로젝트에 변경이 이루어지기에는 어려움이 있다 생각해 저희 팀만의 독자적인 화상채팅을 구현하여 저희가 바라는 기능과 다른 플랫폼에서의 불편했던 점을 개선해보자는 동기로 “Face talk”프로젝트를 진행하게 되었습니다.
 
 
-실행화면 
+<br>
 
+## 📃 Usecase Diagram
 
-![image](https://user-images.githubusercontent.com/81874493/139874695-35573259-9400-41a4-ae5d-5f62475d85f9.png)
-
-
-![화상회의 사진](https://user-images.githubusercontent.com/81874493/139874765-5db33fb7-b5eb-4d99-931c-d7e425c10507.JPG)
-
+<img width="1336" alt="스크린샷 2022-09-30 오후 7 36 02" src="https://user-images.githubusercontent.com/81874493/193255530-7a548a1f-2f45-489e-9c0a-c87e485bc536.png">
 
 
 
-Zoom 클론코딩 이후 추가한 기능
-1. 화상회의에서 정리한 내용을 저장하고 수정 삭제가 가능하다.
-2. 화상회의 방에 입장시 메세지를 통하여 화상채팅 방의 코드를 공유 할 수 있다.
+<br>
 
+## 💻 프로젝트 진행 및 관리
 
+### 프로젝트 진행 방법
 
-
-프로젝트 과정 중 문제점 및 시행착오
-
-프로젝트 과정 중 문제점 및 시행착오에는 첫 번째로 처음 접해보는 WebRTC기술에 대한 이해가 쉽지 않았었습니다.
-WebRTC 기술이란 무엇이고 어떠한 방식으로 두 peer 간의 영상과 음성의 스트림이 전송되며 서버와 클라이언트가 연결되는지의 기본적인 이해와 WebRTC 기술을 편리하게 사용하게 해주는 peer js 라이브러리의 사용법에 대한 숙지에 많은 시간을 보내게 되었습니다.
-두 번째로는 SSL의 문제가 있었습니다.
-화상 채팅에는 영상과 음성 데이터를 사용하기 때문에 HTTPS 프로토콜 기반으로 동작합니다 외부의 다른 클라이언트가 접속을 위해 SSL 적용이 필요했으며 Express 웹서버와 Spring 웹서버 간 데이터 통신이 있어 HTTP와 HTTPS 간 통신은 지원하지 않아 두서버 모두 SSL 적용에 많은 시행착오가 있었습니다.
-마지막으로는 서버 간 통신에 문제가 있었습니다.
-화상회의 이후 넘어가는 문서 데이터의 통신에 CORS(Cross-Origin Resource Sharing) 정책 위반으로 인한 에러 해결에 많은 시간이 소비되었습니다.
+- 프로젝트에서의 업무는 직급과 상관 없이 요청할건 요청하고 인원별 롤 대로 나눠서 업무를 진행 한다.
+- 구두로 협의한 내용이나 업무적으로 협의한 내용이 있을 시 **작은 내용이더라도 모두 노션으로 일일히 정리해관리 한다.**
+- 업무 협의 시 일정에 맞게 진행을 해야한다. 만약 일정이 늦어지거나 문제가 발생 시 바로바로 프로젝트 관련인원들에게 공유하여 해결 및 조율 한다.
+- 함께 논의해야할 사항이 생길 경우 노션에서 논의 사항을 작성하여 함께 고민하여 해결한다.
+- <U>자신이 작성한 코드가 아닌 다른 코드에서 문제점이 발견되었을 경우 직접 수정이 아닌 **요청**을 통해 수정한다. </U> 
+<br>
 
 
 
 
-추후 개선 방향 
+## 📋 System Architecture
 
-첫 번째, 뷰에 대한 분리를 할 예정입니다.
-현재 서버는 Spring 웹서버와 ,Express 웹서버 모두 SSR(Server Side Rendering) 방식을 사용하고 있습니다.
-이후 백 엔드와 프론트 엔드의 구분을 명확히 두어 CSR(Client Side Rendering) 방식을 통해 각 서버 역할에만 집중할 수 있도록 개선할 예정입니다. 
-두 번째, AWS를 이용하여 프로젝트 배포해 외부에서 Domain을 통한 외부 접근이 가능하도록 개선할 예정입니다.
-세 번째, 추후 사용해보며 사용자들의 불편했던 점 과 필요한 기능들에 대해 적극 반영하여 개선해볼 예정입니다.
+<br>
+
+<img width="1431" alt="system architecture" src="https://user-images.githubusercontent.com/81874493/193255543-3ebba9e6-eff6-46a4-9295-abbd9da9de5f.png">
 
 
+<br>
+
+## ⚠️ 문제점 및 해결 방법
+
+[프로젝트 개발 중 문제점 발견시 명시하고 이에 대한 해결 방법을 명시한다.]
+
+ex)
+
+- [x]  서버 통신간 CORS(Cross-Origin Resource Sharing)문제 (2022.7.30 김지용)
+
+    <details>
+    <summary>문제점 & 해결 방법</summary>
+       
+        문제점 : CORS 정책 위반하여 서로 다른 출처를 가진 상태에서 요청시 브라우저가 보안상 이유로 차단
+        
+        해결방법 : 동일 출처에서 리소스 요청 방식을 사용
+       
+     </details>
+
+<br>
+
+## 📔 개발 관련 참고 문서
+
+[개발 중 도움이 되었던 문서가 있을 시 이에 대한 참고 문서를 하이퍼링크 형태로 명시한다.]
+
+ex) [Spring Boot 공식 문서](https://spring.io/projects/spring-boot)
+	
+* [select box 선택시 submit 참고 문서](https://que-n-a.tistory.com/entry/select-tag-option-%EC%84%A0%ED%83%9D-%EC%8B%9C-form-submit-%EB%B3%B4%EB%82%B4%EA%B8%B0)
+
+* [참고 Youtube 영상](https://www.youtube.com/watch?v=DvlyzDZDEq4&t=250s)
+* [참고 Github](https://github.com/WebDevSimplified/Zoom-Clone-With-WebRTC)
+* [참고 티스토리](https://withseungryu.tistory.com/129)
+* [peerjs 공식 문서](https://peerjs.com)
+* [softWare Architect](https://www.lesstif.com/software-architect/openssl-command-tip-7635159.html)
+* [1분코딩](https://studiomeal.com/archives/197)
+* [HTML5 UP](https://html5up.net/)
+
+<br>
+
+## 🚀 프로젝트 실행 방법
+
+1. Spring web Server 폴더의 "서버 실행시 꼭 읽어주세요.txt" 파일을 읽고 절차에 따라 실행시켜주세요
+
+2. express server. 폴더의 "서버 실행시 꼭 읽어주세요.txt" 파일을 읽고 절차에 따라 실행시켜주세요
+
+<br>
+
+## 📺 프로젝트 실행 화면
+<img width="1440" alt="스크린샷 2022-11-07 오후 5 08 49" src="https://user-images.githubusercontent.com/81874493/200261160-c0019141-1ab4-4f53-8e18-4667680669e8.png">
 
 
-참고 자료
-
-
-Youtube 영상,  https://www.youtube.com/watch?v=DvlyzDZDEq4&t=250s,
-
-Github , https://github.com/WebDevSimplified/Zoom-Clone-With-WebRTC
-
-티스토리, https://withseungryu.tistory.com/129 
-
-peerjs, https://peerjs.com 
-
-softWare Architect, https://www.lesstif.com/software-architect/openssl-command-tip-7635159.html 
-
-1분코딩, https://studiomeal.com/archives/197 
-
-HTML5 UP https://html5up.net/ 
