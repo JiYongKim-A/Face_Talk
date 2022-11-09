@@ -25,25 +25,31 @@
 
 ## 📃 Usecase Diagram
 
-<img width="1336" alt="스크린샷 2022-09-30 오후 7 36 02" src="https://user-images.githubusercontent.com/81874493/193255530-7a548a1f-2f45-489e-9c0a-c87e485bc536.png">
+<img width="1346" alt="스크린샷 2022-11-09 오후 2 20 28" src="https://user-images.githubusercontent.com/81874493/200745476-032d8422-7947-4af2-ab66-aa561bfee6eb.png">
 
 
 
 <br>
 
-## 💻 프로젝트 진행 및 관리
+## 💻 시스템 설계
 
-### 프로젝트 진행 방법
+### 도메인 객체 클래스 설계
 
-- 프로젝트에서의 업무는 직급과 상관 없이 요청할건 요청하고 인원별 롤 대로 나눠서 업무를 진행 한다.
-- 구두로 협의한 내용이나 업무적으로 협의한 내용이 있을 시 **작은 내용이더라도 모두 노션으로 일일히 정리해관리 한다.**
-- 업무 협의 시 일정에 맞게 진행을 해야한다. 만약 일정이 늦어지거나 문제가 발생 시 바로바로 프로젝트 관련인원들에게 공유하여 해결 및 조율 한다.
-- 함께 논의해야할 사항이 생길 경우 노션에서 논의 사항을 작성하여 함께 고민하여 해결한다.
-- <U>자신이 작성한 코드가 아닌 다른 코드에서 문제점이 발견되었을 경우 직접 수정이 아닌 **요청**을 통해 수정한다. </U> 
+![KakaoTalk_Photo_2022-11-09-14-04-13](https://user-images.githubusercontent.com/81874493/200745712-07abf9f5-74da-430a-8d1d-f7c802c7d00d.png)
+
 <br>
 
+### 도메인 로직 설계
 
+![KakaoTalk_Photo_2022-11-09-14-03-54](https://user-images.githubusercontent.com/81874493/200745759-df947fd9-0887-4d7e-a3b7-1c12bf0364d4.png)
 
+<br>
+
+### Controller 구성도
+
+![KakaoTalk_Photo_2022-11-09-14-03-24](https://user-images.githubusercontent.com/81874493/200745856-9908b054-7cb5-42b2-aac0-8977fdf7cb51.png)
+
+<br>
 
 ## 📋 System Architecture
 
