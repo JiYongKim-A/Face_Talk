@@ -24,7 +24,7 @@
 
  ‘Face talk’ 웹 어플리케이션은 웹을 통한 화상채팅 어플리케이션 입니다.
 	
-학교 혹은 외부에서 자주 사용하는 웹 화상채팅(zoom, google meet 등)을 사용하면서 불편한 점과 추가되었으면 좋을 기능을 생각해보았지만 zoom 혹은 meet 등의 플랫폼에서 저희 의견을 반영하여 현재 문제없이 진행되고 있는 프로젝트에 변경이 이루어지기에는 어려움이 있다 생각해 저희 팀만의 독자적인 화상채팅을 구현하여 저희가 바라는 기능과 다른 플랫폼에서의 불편했던 점을 개선해보자는 동기로 “Face talk”프로젝트를 진행하게 되었습니다.
+학교 혹은 외부에서 자주 사용하는 웹 화상채팅(zoom, google meet 등)을 사용하면서 불편한 점과 추가되었으면 좋을 기능을 생각해보았지만 zoom 혹은 meet 등의 플랫폼에서 저희 의견을 반영하여 현재 문제없이 진행되고 있는 프로젝트에 변경이 이루어지기에는 어려움이 있다 생각해 저희 팀만의 독자적인 화상채팅을 구현하여 화상회의에 대한 문서 관리 기능과 쪽지 기능을 추가하여 다른 플랫폼에서의 불편했던 점을 개선과 새로운 기능을 추가 해보자는 동기로 “Face talk”프로젝트를 진행하게 되었습니다.
 
 
 <br>
@@ -39,19 +39,19 @@
 
 ## 💻 시스템 설계
 
-### 도메인 객체 클래스 설계
+### I. 도메인 객체 클래스 설계
 
 ![KakaoTalk_Photo_2022-11-09-14-04-13](https://user-images.githubusercontent.com/81874493/200745712-07abf9f5-74da-430a-8d1d-f7c802c7d00d.png)
 
 <br>
 
-### 도메인 로직 설계
+### II. 서비스 도메인 로직 설계
 
 ![KakaoTalk_Photo_2022-11-09-14-03-54](https://user-images.githubusercontent.com/81874493/200745759-df947fd9-0887-4d7e-a3b7-1c12bf0364d4.png)
 
 <br>
 
-### Controller 구성도
+### III. Controller 구성도
 
 ![KakaoTalk_Photo_2022-11-09-14-03-24](https://user-images.githubusercontent.com/81874493/200745856-9908b054-7cb5-42b2-aac0-8977fdf7cb51.png)
 
@@ -61,7 +61,7 @@
 
 <br>
 
-<img width="1437" alt="스크린샷 2022-11-09 오후 2 55 03" src="https://user-images.githubusercontent.com/81874493/200750528-192b06d3-bda6-4db9-b4c4-98af8c444d88.png">
+<img width="1427" alt="스크린샷 2022-11-09 오후 3 27 01" src="https://user-images.githubusercontent.com/81874493/200755565-1ec5d3af-87f9-4820-a1a0-642f58f21a57.png">
 
 
 <br>
