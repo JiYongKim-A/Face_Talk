@@ -55,7 +55,7 @@
 
 <br>
 
-<img width="1431" alt="system architecture" src="https://user-images.githubusercontent.com/81874493/193255543-3ebba9e6-eff6-46a4-9295-abbd9da9de5f.png">
+<img width="1437" alt="스크린샷 2022-11-09 오후 2 55 03" src="https://user-images.githubusercontent.com/81874493/200750528-192b06d3-bda6-4db9-b4c4-98af8c444d88.png">
 
 
 <br>
