@@ -57,6 +57,12 @@
 
 <br>
 
+### IV. DB 설계도
+
+<img width="1141" alt="스크린샷 2022-11-09 오후 3 57 36" src="https://user-images.githubusercontent.com/81874493/200760907-52c8abd8-acc2-4eb2-ab3b-5c4111b0f8ef.png">
+
+<br>
+
 ## 📋 System Architecture
 
 <br>
