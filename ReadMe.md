@@ -85,6 +85,19 @@ ex)
 
 <br>
 
+## 🚀 프로젝트 실행 방법
+
+1. Spring web Server 폴더의 "서버 실행시 꼭 읽어주세요.txt" 파일을 읽고 절차에 따라 실행시켜주세요
+
+2. express server. 폴더의 "서버 실행시 꼭 읽어주세요.txt" 파일을 읽고 절차에 따라 실행시켜주세요
+
+<br>
+
+## 📺 프로젝트 실행 화면
+<img width="1440" alt="스크린샷 2022-11-07 오후 5 08 49" src="https://user-images.githubusercontent.com/81874493/200261160-c0019141-1ab4-4f53-8e18-4667680669e8.png">
+
+<br>
+
 ## 📔 개발 관련 참고 문서
 
 [개발 중 도움이 되었던 문서가 있을 시 이에 대한 참고 문서를 하이퍼링크 형태로 명시한다.]
@@ -102,16 +115,3 @@ ex) [Spring Boot 공식 문서](https://spring.io/projects/spring-boot)
 * [HTML5 UP](https://html5up.net/)
 
 <br>
-
-## 🚀 프로젝트 실행 방법
-
-1. Spring web Server 폴더의 "서버 실행시 꼭 읽어주세요.txt" 파일을 읽고 절차에 따라 실행시켜주세요
-
-2. express server. 폴더의 "서버 실행시 꼭 읽어주세요.txt" 파일을 읽고 절차에 따라 실행시켜주세요
-
-<br>
-
-## 📺 프로젝트 실행 화면
-<img width="1440" alt="스크린샷 2022-11-07 오후 5 08 49" src="https://user-images.githubusercontent.com/81874493/200261160-c0019141-1ab4-4f53-8e18-4667680669e8.png">
-
-
