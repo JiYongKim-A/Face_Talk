@@ -24,13 +24,7 @@ navigator.mediaDevices.getUserMedia({
   audio: true
 }).then(stream => {
 
-  window.onload = function() {
-    if(!window.location.hash) {
-        window.location = window.location + '#loaded';
-        window.location.reload();
-    }
-}
-
+  
 localStream = stream // 음소거 버튼 사용위해 내 스트림을 localStream으로 지정
 
   myVideo.srcObject = stream
@@ -75,6 +69,13 @@ window.addEventListener("beforeunload", function (event) {
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {
       addVideoStream(video, userVideoStream);
+      window.onload = function() {
+        if(!window.location.hash) {
+            window.location = window.location + '#loaded';
+            window.location.reload();
+        }
+    }
+    
     });
   });
 
