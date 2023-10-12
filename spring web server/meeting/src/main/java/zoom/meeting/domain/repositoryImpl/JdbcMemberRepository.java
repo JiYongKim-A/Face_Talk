@@ -235,7 +235,7 @@ public class JdbcMemberRepository implements MemberRepository {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, loginId);
 
-            rs = pstmt.executeQuery();
+            pstmt.executeUpdate();
 
         } catch (Exception e) {
             log.error("{} : id의 사용자 delete 실패",loginId);
