@@ -1,27 +1,17 @@
-package zoom.meeting.domain.login;
+package zoom.meeting.service.login.Implement;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
+import zoom.meeting.service.login.LoginService;
 
-@Service
 @RequiredArgsConstructor
-public class LoginService {
+public class LoginServiceImplementV1 implements LoginService {
     private final MemberRepository memberRepository;
-
-    /**
-     * Login Service
-     * @param loginId
-     * @param password
-     * @return
-     */
-
-
+    @Override
     public Member login(String loginId, String password) {
         return memberRepository.findByLoginId(loginId)
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
-
     }
 }
