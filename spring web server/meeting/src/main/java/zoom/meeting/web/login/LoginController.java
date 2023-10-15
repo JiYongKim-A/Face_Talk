@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import zoom.meeting.domain.login.LoginService;
 import zoom.meeting.domain.member.Member;
+import zoom.meeting.service.login.LoginService;
 import zoom.meeting.web.login.form.LoginForm;
 import zoom.meeting.web.session.form.SessionForm;
 import zoom.meeting.web.sessionConst.SessionConst;
@@ -52,10 +52,11 @@ public class LoginController {
 
         // success logic -> mk Session
 
-        HttpSession session = req.getSession();
-        SessionForm loggedMemSession = new SessionForm(loginMember.getLoginId(), loginMember.getNickName());
+//        HttpSession session = req.getSession();
+//        SessionForm loggedMemSession = new SessionForm(loginMember.getLoginId(), loginMember.getNickName());
+//        session.setAttribute(SessionConst.LOGIN_SESSION_KEY, loggedMemSession);
+        loginService.generateSession(req,loginMember.getLoginId(),loginMember.getNickName());
 
-        session.setAttribute(SessionConst.LOGIN_SESSION_KEY, loggedMemSession);
         return "redirect:"+redirectURL;
     }
 
