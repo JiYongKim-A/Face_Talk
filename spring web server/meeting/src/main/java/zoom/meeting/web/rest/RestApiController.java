@@ -5,14 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import zoom.meeting.domain.note.Note;
-import zoom.meeting.domain.repositoryImpl.MemoryNoteRepository;
-import zoom.meeting.domain.repositoryInterface.NoteRepository;
+import zoom.meeting.service.documentService.DocumentService;
 import zoom.meeting.web.rest.jsonData.JsonData;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 @Slf4j
 @CrossOrigin(origins = "*")
@@ -20,50 +14,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RestApiController {
 
-    private final NoteRepository noteRepository;
+    private final DocumentService documentService;
 
     @PostMapping("/saveData")
     @ResponseBody
     public String rest(@RequestBody JsonData jsonData) {
-
-        Optional<Note> findNote = noteRepository.findByUserUUID(jsonData.getUserUUID());
-
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm");
-        String time = now.format(formatter);
-
-
-        // text, title 없을 시 저장 안함
-        if(jsonData.getTitle().equals("")&&jsonData.getText().equals("")){
+        Note note = documentService.saveDocument(jsonData.getUserUUID(),
+                jsonData.getRoomUUID().split("-")[2],
+                jsonData.getTitle(),
+                jsonData.getNickName(),
+                jsonData.getText());
+        if(note == null){
+            log.info("fail");
             return "fail";
         }
-
-        if(jsonData.getTitle().equals("")){
-            jsonData.setTitle("제목 없음");
-        }
-
-
-        // 이미 문서함에 저장된 형식이 없을시 저장
-        if(findNote.isEmpty()){
-            noteRepository.save(new Note(
-                    jsonData.getUserUUID(),
-                    jsonData.getRoomUUID().split("-")[2],
-                    time,
-                    jsonData.getTitle(),
-                    jsonData.getNickName(),
-                    jsonData.getText()));
-            log.info("저장시킴");
-            log.info("jsonData ={}",jsonData);
-            return "ok";
-        }
-    // 저장된 문서가 있을시 업데이트
-        Note note = findNote.get();
-        note.setDate(time);
-        note.setTitle(jsonData.getTitle());
-        note.setText(jsonData.getText());
-        log.info("업뎃 시킴");
-        log.info("jsonData ={}",jsonData);
-    return "ok";
+        log.info("fail");
+        return "ok";
     }
-
 }
