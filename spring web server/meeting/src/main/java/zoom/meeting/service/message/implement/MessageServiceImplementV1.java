@@ -21,7 +21,7 @@ public class MessageServiceImplementV1 implements MessageService {
     private final MemberRepository memberRepository;
 
     @Override
-    public List<Message> getMyMessageList(String nickName) {
+    public List<Message> getMessageList(String nickName) {
         return messageRepository.findByNickNameAll(nickName);
     }
 
@@ -70,6 +70,11 @@ public class MessageServiceImplementV1 implements MessageService {
             messageRepository.send(m);
         }
         return null;
+    }
+
+    @Override
+    public String checkNewMessage(String nickName) {
+        return messageRepository.checkNewMessage(nickName);
     }
 
 }
