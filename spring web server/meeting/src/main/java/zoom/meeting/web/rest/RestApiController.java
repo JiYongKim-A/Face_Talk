@@ -24,7 +24,7 @@ public class RestApiController {
 
     @PostMapping("/saveData")
     @ResponseBody
-    public String rest(@RequestBody JsonData jsonData) throws IOException {
+    public String rest(@RequestBody JsonData jsonData) {
 
         Optional<Note> findNote = noteRepository.findByUserUUID(jsonData.getUserUUID());
 
@@ -37,6 +37,7 @@ public class RestApiController {
         if(jsonData.getTitle().equals("")&&jsonData.getText().equals("")){
             return "fail";
         }
+
         if(jsonData.getTitle().equals("")){
             jsonData.setTitle("제목 없음");
         }
