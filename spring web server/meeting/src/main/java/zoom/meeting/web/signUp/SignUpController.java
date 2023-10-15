@@ -9,21 +9,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import zoom.meeting.domain.member.Member;
-import zoom.meeting.domain.message.Message;
-import zoom.meeting.domain.repositoryInterface.MessageRepository;
+import zoom.meeting.service.message.MessageService;
 import zoom.meeting.service.signUp.SignUpService;
 import zoom.meeting.web.signUp.form.SignUpForm;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class SignUpController {
     private final SignUpService signUpService;
-    private final MessageRepository messageRepository;
+    private final MessageService messageService;
 
     @GetMapping("/signUp")
     public String signUpForm(@ModelAttribute("signUpForm") SignUpForm form) {
@@ -74,18 +71,8 @@ public class SignUpController {
 
         //success signUp
         signUpService.memberSignUp(new Member(form.getLoginId(), form.getPassword(), form.getName(), form.getNickName()));
-
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm");
-        String time = now.format(formatter);
-
-        Message message = new Message("운영자", form.getNickName(),
-                time,
-                "회원가입을 환영합니다.",
-                "Face talk 회원가입을 환영합니다!!  좋은 하루되시길 바라며 많은 이용 부탁드립니다~~!!",
-                "N");
-        messageRepository.send(message);
-
+        messageService.sendMessage(form.getNickName(), "운영자", "회원가입을 환영합니다.",
+                "Face talk 회원가입을 환영합니다!!  좋은 하루되시길 바라며 많은 이용 부탁드립니다~~!!");
         return "redirect:/login";
     }
 }

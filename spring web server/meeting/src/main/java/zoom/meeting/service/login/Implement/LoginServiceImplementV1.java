@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.service.login.LoginService;
-import zoom.meeting.web.session.form.SessionForm;
-import zoom.meeting.web.sessionConst.SessionConst;
+import zoom.meeting.config.session.form.SessionForm;
+import zoom.meeting.config.session.sessionConst.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

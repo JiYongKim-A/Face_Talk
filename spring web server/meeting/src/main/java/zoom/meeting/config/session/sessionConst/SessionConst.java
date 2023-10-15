@@ -1,4 +1,4 @@
-package zoom.meeting.web.sessionConst;
+package zoom.meeting.config.session.sessionConst;
 
 public abstract class SessionConst {
 

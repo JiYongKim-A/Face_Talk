@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import zoom.meeting.web.interceptor.LoginCheckInterceptor;
+import zoom.meeting.config.interceptor.LoginCheckInterceptor;
 
 @Configuration
 @RequiredArgsConstructor

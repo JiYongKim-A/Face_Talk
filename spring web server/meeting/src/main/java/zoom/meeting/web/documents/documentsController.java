@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
-import zoom.meeting.web.session.form.SessionForm;
-import zoom.meeting.web.sessionConst.SessionConst;
+import zoom.meeting.config.session.form.SessionForm;
+import zoom.meeting.config.session.sessionConst.SessionConst;
 
 @Controller
 @RequiredArgsConstructor

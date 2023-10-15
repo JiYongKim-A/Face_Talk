@@ -1,7 +1,6 @@
 package zoom.meeting.web.meeting;
 
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -10,9 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import zoom.meeting.domain.member.Member;
-import zoom.meeting.web.session.form.SessionForm;
-import zoom.meeting.web.sessionConst.SessionConst;
+import zoom.meeting.config.session.form.SessionForm;
+import zoom.meeting.config.session.sessionConst.SessionConst;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;

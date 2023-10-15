@@ -1,8 +1,8 @@
-package zoom.meeting.web.interceptor;
+package zoom.meeting.config.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
-import zoom.meeting.web.sessionConst.SessionConst;
+import zoom.meeting.config.session.sessionConst.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

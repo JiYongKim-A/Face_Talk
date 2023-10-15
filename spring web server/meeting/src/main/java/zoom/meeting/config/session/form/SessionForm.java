@@ -1,4 +1,4 @@
-package zoom.meeting.web.session.form;
+package zoom.meeting.config.session.form;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

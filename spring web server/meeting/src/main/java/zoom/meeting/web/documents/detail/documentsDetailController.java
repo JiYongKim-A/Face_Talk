@@ -8,9 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import zoom.meeting.domain.note.Note;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
-import zoom.meeting.web.documents.detail.form.documentsDetailModifyForm;
-import zoom.meeting.web.session.form.SessionForm;
-import zoom.meeting.web.sessionConst.SessionConst;
+import zoom.meeting.config.session.form.SessionForm;
+import zoom.meeting.config.session.sessionConst.SessionConst;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
