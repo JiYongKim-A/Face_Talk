@@ -14,8 +14,8 @@ import zoom.meeting.config.session.sessionConst.SessionConst;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,17 +30,12 @@ public class meetingController {
     public String start(RedirectAttributes redirectAttributes,
                         HttpServletResponse response,
                         @SessionAttribute(name = SessionConst.LOGIN_SESSION_KEY,required = false)SessionForm form) {
-        String url = messageSource.getMessage("urlPath", null, null);
+        String url = messageSource.getMessage("urlPath", null,null);
         String nickName = form.getNickName();
 
         redirectAttributes.addAttribute("urlPath", url);
 
-        try {
-            Cookie nickNameCookie = new Cookie("nickName", URLEncoder.encode(nickName, "UTF-8"));
-            response.addCookie(nickNameCookie);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        addCookie(nickName, response);
 
         return "redirect:https://{urlPath}";
     }
@@ -53,30 +48,22 @@ public class meetingController {
         Pattern pattern = Pattern.compile("\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b");
         Matcher matcher = pattern.matcher(code);
 
-        if(!matcher.matches()){
+        if(!matcher.matches() || code.equals("")){
             return "redirect:/";
         }
 
-        if(code.equals("")){
-            return "redirect:/";
-        }
-
-        // properties에서 url값 가져옴
         String url = messageSource.getMessage("urlPath", null, null);
         String nickName = form.getNickName();
 
         redirectAttributes.addAttribute("urlPath", url);
         redirectAttributes.addAttribute("code", code);
 
-        try {
-            Cookie nickNameCookie = new Cookie("nickName", URLEncoder.encode(nickName, "UTF-8"));
-            response.addCookie(nickNameCookie);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
+        addCookie(nickName, response);
         return "redirect:https://{urlPath}/{code}";
     }
 
-
+    private void addCookie(String nickName, HttpServletResponse response) {
+        Cookie nickNameCookie = new Cookie("nickName", URLEncoder.encode(nickName, StandardCharsets.UTF_8));
+        response.addCookie(nickNameCookie);
+    }
 }
