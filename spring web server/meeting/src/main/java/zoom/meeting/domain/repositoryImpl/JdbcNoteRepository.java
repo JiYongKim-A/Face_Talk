@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Repository;
 import zoom.meeting.domain.note.Note;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
@@ -51,10 +52,10 @@ public class JdbcNoteRepository implements NoteRepository {
             }
             return note;
         } catch (Exception e) {
-            log.error("note save 실패 ,note 정보 = [{}]", note.getDate(),note.getNickName(),note.getTitle());
+            log.error("note save 실패 ,note 정보 = [{}]", note.getDate(), note.getNickName(), note.getTitle());
             throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -90,8 +91,8 @@ public class JdbcNoteRepository implements NoteRepository {
 
         } catch (Exception e) {
             throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -108,12 +109,12 @@ public class JdbcNoteRepository implements NoteRepository {
 
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,nickName);
+            pstmt.setString(1, nickName);
 
             rs = pstmt.executeQuery();
 
             List<Note> notes = new ArrayList<>();
-            while(rs.next()) {
+            while (rs.next()) {
                 Note note = new Note(
                         rs.getString("userUUID"),
                         rs.getString("roomUUID"),
@@ -121,15 +122,15 @@ public class JdbcNoteRepository implements NoteRepository {
                         rs.getString("title"),
                         rs.getString("nickName"),
                         rs.getString("content"));
-                    note.setManageSeq(rs.getLong("manageSeq"));
+                note.setManageSeq(rs.getLong("manageSeq"));
                 notes.add(note);
             }
             return notes;
 
         } catch (Exception e) {
             throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -145,7 +146,7 @@ public class JdbcNoteRepository implements NoteRepository {
 
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,userUUID);
+            pstmt.setString(1, userUUID);
 
             rs = pstmt.executeQuery();
 
@@ -164,8 +165,8 @@ public class JdbcNoteRepository implements NoteRepository {
 
         } catch (Exception e) {
             throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -181,7 +182,7 @@ public class JdbcNoteRepository implements NoteRepository {
 
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1,manageSeq);
+            pstmt.setLong(1, manageSeq);
 
             rs = pstmt.executeQuery();
 
@@ -200,8 +201,8 @@ public class JdbcNoteRepository implements NoteRepository {
 
         } catch (Exception e) {
             throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -228,22 +229,20 @@ public class JdbcNoteRepository implements NoteRepository {
             pstmt.setString(6, updatedNote.getRoomUUID());
             pstmt.setLong(7, manageSeq);
 
-//            rs = pstmt.executeQuery();
             pstmt.executeUpdate();
 
             return updatedNote;
 
         } catch (Exception e) {
-            log.error("{} : note의 update 실패",updatedNote.getDate(),updatedNote.getNickName(),updatedNote.getTitle());
+            log.error("{} : note의 update 실패", updatedNote.getDate(), updatedNote.getNickName(), updatedNote.getTitle());
             throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
     @Override
     public void removeByManageSeq(Long manageSeq) {
-
 
         String sql = "delete from noteRepository where manageSeq=?";
 
@@ -256,54 +255,22 @@ public class JdbcNoteRepository implements NoteRepository {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, manageSeq);
-
-           // delete 는 excuteUpdate임 rs 안받음
             pstmt.executeUpdate(); //
 
-//            rs = pstmt.executeQuery();
 
         } catch (Exception e) {
-            log.error("{}번: note의 delete 실패",manageSeq);
+            log.error("{}번: note의 delete 실패", manageSeq);
             throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } finally {
+            close(conn, pstmt, rs);
         }
 
     }
-
-
-    private void close(Connection conn) throws SQLException {
-        DataSourceUtils.releaseConnection(conn, dataSource);
-    }
-
 
     private void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
-
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (conn != null) {
-                close(conn);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        JdbcUtils.closeResultSet(rs);
+        JdbcUtils.closeStatement(pstmt);
+        DataSourceUtils.releaseConnection(conn, dataSource);
     }
 
     private Connection getConnection() {
