@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Repository;
 import zoom.meeting.domain.message.Message;
 import zoom.meeting.domain.note.Note;
@@ -169,17 +170,18 @@ public class JdbcMessageRepository implements MessageRepository {
     public String checkNewMessage(String nickName) {
         List<Message> findList = findByNickNameAll(nickName);
         if (findList == null) {
-            return "Y";
+            return "N";
         }
+
 
         Optional<Message> check = findList.stream()
                 .filter(m -> m.getIsRead().equals("N"))
                 .findFirst();
         if(check.isEmpty()){
-            return "Y";
+            return "N";
         }
 
-        return "N";
+        return "Y";
     }
 
     @Override
@@ -210,38 +212,10 @@ public class JdbcMessageRepository implements MessageRepository {
 
     }
 
-    private void close(Connection conn) throws SQLException {
-        DataSourceUtils.releaseConnection(conn, dataSource);
-    }
-
-
     private void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
-
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (conn != null) {
-                close(conn);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        JdbcUtils.closeResultSet(rs);
+        JdbcUtils.closeStatement(pstmt);
+        DataSourceUtils.releaseConnection(conn,dataSource);
     }
 
     private Connection getConnection() {
