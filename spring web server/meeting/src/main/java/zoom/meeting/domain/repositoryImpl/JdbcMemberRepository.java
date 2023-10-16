@@ -3,6 +3,7 @@ package zoom.meeting.domain.repositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Repository;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
@@ -223,7 +224,7 @@ public class JdbcMemberRepository implements MemberRepository {
     public void removeByLoginId(String loginId) {
 
 
-        String sql = "delete from memberRepository where loginid=?";
+        String sql = "delete from memberRepository where loginId=?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -280,39 +281,10 @@ public class JdbcMemberRepository implements MemberRepository {
         }
     }
 
-
-    private void close(Connection conn) throws SQLException {
-        DataSourceUtils.releaseConnection(conn, dataSource);
-    }
-
-
     private void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
-
-        try {
-            if (rs != null) {
-                rs.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            if (conn != null) {
-                close(conn);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        JdbcUtils.closeResultSet(rs);
+        JdbcUtils.closeStatement(pstmt);
+        DataSourceUtils.releaseConnection(conn,dataSource);
     }
 
     private Connection getConnection() {
