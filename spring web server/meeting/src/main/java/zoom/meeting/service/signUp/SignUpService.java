@@ -6,5 +6,5 @@ public interface SignUpService {
 
     boolean[] validation(String loginId, String password, String nickName);
 
-    void memberSignUp(Member member);
+    Member memberSignUp(Member member);
 }
