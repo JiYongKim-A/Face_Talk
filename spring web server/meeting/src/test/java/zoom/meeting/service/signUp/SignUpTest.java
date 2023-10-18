@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.repositoryImpl.JdbcMemberRepository;
@@ -44,7 +43,7 @@ public class SignUpTest {
 
         @Bean
         SignUpServiceImplementV1 signUpServiceImplementV1() {
-            return new SignUpServiceImplementV1(memberRepository(), new DataSourceTransactionManager(dataSource()));
+            return new SignUpServiceImplementV1(memberRepository());
         }
     }
 
