@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
+import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.stereotype.Repository;
 import zoom.meeting.domain.note.Note;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
@@ -18,10 +20,15 @@ import java.util.Optional;
 @Slf4j
 @Primary
 @Repository
-@RequiredArgsConstructor
 public class JdbcNoteRepository implements NoteRepository {
 
     private final DataSource dataSource;
+    private final SQLExceptionTranslator exTranslator;
+
+    public JdbcNoteRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+        this.exTranslator = new SQLErrorCodeSQLExceptionTranslator(dataSource);
+    }
 
     @Override
     public Note save(Note note) {
@@ -51,9 +58,9 @@ public class JdbcNoteRepository implements NoteRepository {
                 throw new SQLException("note 조회 실패");
             }
             return note;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             log.error("note save 실패 ,note 정보 = [{}]", note.getDate(), note.getNickName(), note.getTitle());
-            throw new IllegalStateException(e);
+            throw exTranslator.translate("save", sql, e);
         } finally {
             close(conn, pstmt, rs);
         }
@@ -69,10 +76,8 @@ public class JdbcNoteRepository implements NoteRepository {
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-
             rs = pstmt.executeQuery();
 
             List<Note> notes = new ArrayList<>();
@@ -89,8 +94,8 @@ public class JdbcNoteRepository implements NoteRepository {
             }
             return notes;
 
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
+        } catch (SQLException e) {
+            throw exTranslator.translate("findAll", sql, e);
         } finally {
             close(conn, pstmt, rs);
         }
@@ -106,7 +111,6 @@ public class JdbcNoteRepository implements NoteRepository {
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, nickName);
@@ -126,9 +130,8 @@ public class JdbcNoteRepository implements NoteRepository {
                 notes.add(note);
             }
             return notes;
-
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
+        } catch (SQLException e) {
+            throw exTranslator.translate("findByNickNameAll", sql, e);
         } finally {
             close(conn, pstmt, rs);
         }
@@ -143,13 +146,11 @@ public class JdbcNoteRepository implements NoteRepository {
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userUUID);
 
             rs = pstmt.executeQuery();
-
             if (rs.next()) {
                 Note note = new Note(
                         rs.getString("userUUID"),
@@ -163,8 +164,8 @@ public class JdbcNoteRepository implements NoteRepository {
             }
             return Optional.empty();
 
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
+        } catch (SQLException e) {
+            throw exTranslator.translate("findByUserUUID", sql, e);
         } finally {
             close(conn, pstmt, rs);
         }
@@ -179,7 +180,6 @@ public class JdbcNoteRepository implements NoteRepository {
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, manageSeq);
@@ -199,8 +199,8 @@ public class JdbcNoteRepository implements NoteRepository {
             }
             return Optional.empty();
 
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
+        } catch (SQLException e) {
+            throw exTranslator.translate("findByManageSeq", sql, e);
         } finally {
             close(conn, pstmt, rs);
         }
@@ -210,7 +210,6 @@ public class JdbcNoteRepository implements NoteRepository {
     @Override
     public Note updateByManageSeq(Long manageSeq, Note updatedNote) {
 
-
         String sql = "update noteRepository set nickName=?,date=?,title=?,content=?,userUUID=?,roomUUID=? where manageSeq=?";
 
         Connection conn = null;
@@ -218,7 +217,6 @@ public class JdbcNoteRepository implements NoteRepository {
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, updatedNote.getNickName());
@@ -232,10 +230,9 @@ public class JdbcNoteRepository implements NoteRepository {
             pstmt.executeUpdate();
 
             return updatedNote;
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             log.error("{} : note의 update 실패", updatedNote.getDate(), updatedNote.getNickName(), updatedNote.getTitle());
-            throw new IllegalStateException(e);
+            throw exTranslator.translate("updateByManageSeq", sql, e);
         } finally {
             close(conn, pstmt, rs);
         }
@@ -251,20 +248,16 @@ public class JdbcNoteRepository implements NoteRepository {
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, manageSeq);
-            pstmt.executeUpdate(); //
-
-
-        } catch (Exception e) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
             log.error("{}번: note의 delete 실패", manageSeq);
-            throw new IllegalStateException(e);
+            throw exTranslator.translate("removeVyManageSeq", sql, e);
         } finally {
             close(conn, pstmt, rs);
         }
-
     }
 
     private void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
@@ -276,5 +269,4 @@ public class JdbcNoteRepository implements NoteRepository {
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }
-
 }
