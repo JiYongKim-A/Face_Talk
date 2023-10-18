@@ -1,13 +1,13 @@
 package zoom.meeting.domain.repositoryImpl;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
+import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.stereotype.Repository;
 import zoom.meeting.domain.message.Message;
-import zoom.meeting.domain.note.Note;
 import zoom.meeting.domain.repositoryInterface.MessageRepository;
 
 import javax.sql.DataSource;
@@ -19,9 +19,15 @@ import java.util.Optional;
 @Slf4j
 @Primary
 @Repository
-@RequiredArgsConstructor
 public class JdbcMessageRepository implements MessageRepository {
     private final DataSource dataSource;
+    private final SQLExceptionTranslator exTranslator;
+
+    public JdbcMessageRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+        this.exTranslator = new SQLErrorCodeSQLExceptionTranslator(dataSource);
+    }
+
 
     @Override
     public Message send(Message message) {
@@ -47,15 +53,13 @@ public class JdbcMessageRepository implements MessageRepository {
 
             if (rs.next()) {
                 message.setManageSeq(rs.getLong(1));
-            } else {
-                throw new SQLException("note 조회 실패");
             }
             return message;
-        } catch (Exception e) {
-            log.error("message send 실패 ,message 정보 = [{}]", message.getDate(),message.getSender());
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            log.error("message send 실패 ,message 정보 = [{}]", message.getDate(), message.getSender());
+            throw exTranslator.translate("send", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -69,15 +73,14 @@ public class JdbcMessageRepository implements MessageRepository {
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,nickName);
+            pstmt.setString(1, nickName);
 
             rs = pstmt.executeQuery();
 
             List<Message> messages = new ArrayList<>();
-            while(rs.next()) {
+            while (rs.next()) {
                 Message message = new Message(
                         rs.getString("sender"),
                         rs.getString("recipient"),
@@ -87,16 +90,13 @@ public class JdbcMessageRepository implements MessageRepository {
                         rs.getString("isRead"));
 
                 message.setManageSeq(rs.getLong("manageSeq"));
-
-
                 messages.add(message);
             }
             return messages;
-
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            throw exTranslator.translate("findByNickNameAll", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -110,11 +110,9 @@ public class JdbcMessageRepository implements MessageRepository {
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1,manageSeq);
-
+            pstmt.setLong(1, manageSeq);
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -129,11 +127,10 @@ public class JdbcMessageRepository implements MessageRepository {
                 return Optional.of(message);
             }
             return Optional.empty();
-
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            throw exTranslator.translate("findByManageSeq", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
 
     }
@@ -148,20 +145,16 @@ public class JdbcMessageRepository implements MessageRepository {
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, manageSeq);
 
-            // delete 는 excuteUpdate임 rs 안받음
-            pstmt.executeUpdate(); //
-
-
-        } catch (Exception e) {
-            log.error("{}번: meassege의 delete 실패",manageSeq);
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            log.error("{}번: meassege의 delete 실패", manageSeq);
+            throw exTranslator.translate("removeByManageSeq", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
 
     }
@@ -173,14 +166,12 @@ public class JdbcMessageRepository implements MessageRepository {
             return "N";
         }
 
-
         Optional<Message> check = findList.stream()
                 .filter(m -> m.getIsRead().equals("N"))
                 .findFirst();
-        if(check.isEmpty()){
+        if (check.isEmpty()) {
             return "N";
         }
-
         return "Y";
     }
 
@@ -197,30 +188,23 @@ public class JdbcMessageRepository implements MessageRepository {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, "Y");
             pstmt.setLong(2, manageSeq);
-
             pstmt.executeUpdate();
-
-
-
-
-        } catch (Exception e) {
-            log.error("{} : message isRead update 실패 {}",manageSeq);
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            log.error("{} : message isRead update 실패 {}", manageSeq);
+            throw exTranslator.translate("isReadUpdate", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
-
     }
 
     private void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
         JdbcUtils.closeResultSet(rs);
         JdbcUtils.closeStatement(pstmt);
-        DataSourceUtils.releaseConnection(conn,dataSource);
+        DataSourceUtils.releaseConnection(conn, dataSource);
     }
 
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }
-
 
 }
