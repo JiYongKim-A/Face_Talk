@@ -1,9 +1,10 @@
 package zoom.meeting.domain.repositoryImpl;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
+import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.stereotype.Repository;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
@@ -19,26 +20,28 @@ import java.util.Optional;
 @Slf4j
 @Primary
 @Repository
-@RequiredArgsConstructor
 public class JdbcMemberRepository implements MemberRepository {
 
     private final DataSource dataSource;
+
+    private final SQLExceptionTranslator exTranslator;
+
+    public JdbcMemberRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+        this.exTranslator = new SQLErrorCodeSQLExceptionTranslator(dataSource);
+    }
 
     @Override
     public List<String> allLoginId() {
 
         String sql = "select * from memberRepository";
-
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-
             rs = pstmt.executeQuery();
 
             List<String> allLoginId = new ArrayList<>();
@@ -46,10 +49,10 @@ public class JdbcMemberRepository implements MemberRepository {
                 allLoginId.add(rs.getString("loginId"));
             }
             return allLoginId;
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            throw exTranslator.translate("allLoginId", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -58,16 +61,13 @@ public class JdbcMemberRepository implements MemberRepository {
     public List<String> allNickName() {
 
         String sql = "select * from memberRepository";
-
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-
             rs = pstmt.executeQuery();
 
             List<String> allNickName = new ArrayList<>();
@@ -75,10 +75,10 @@ public class JdbcMemberRepository implements MemberRepository {
                 allNickName.add(rs.getString("nickName"));
             }
             return allNickName;
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            throw exTranslator.translate("allNickName", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -87,33 +87,28 @@ public class JdbcMemberRepository implements MemberRepository {
     public Member save(Member member) {
 
         String sql = "insert into memberRepository (loginId,password,name,nickName) values(?,?,?,?)";
-
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-            pstmt.setString(1,member.getLoginId());
-            pstmt.setString(2,member.getPassword());
-            pstmt.setString(3,member.getName());
-            pstmt.setString(4,member.getNickName());
+            pstmt.setString(1, member.getLoginId());
+            pstmt.setString(2, member.getPassword());
+            pstmt.setString(3, member.getName());
+            pstmt.setString(4, member.getNickName());
             pstmt.executeUpdate();
 
             rs = pstmt.getGeneratedKeys();
 
             if (rs.next()) {
                 member.setManageSeq(rs.getLong(1));
-            } else{
-                throw new SQLException("id 조회 실패");
             }
             return member;
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            throw exTranslator.translate("save", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -121,17 +116,14 @@ public class JdbcMemberRepository implements MemberRepository {
     public Optional<Member> findByLoginId(String loginId) {
 
         String sql = "select * from memberRepository where loginId = ?";
-
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,loginId);
-
+            pstmt.setString(1, loginId);
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -145,10 +137,10 @@ public class JdbcMemberRepository implements MemberRepository {
             }
             return Optional.empty();
 
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            throw exTranslator.translate("findByLoginId", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -156,16 +148,13 @@ public class JdbcMemberRepository implements MemberRepository {
     public List<Member> findAll() {
 
         String sql = "select * from memberRepository";
-
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-
             rs = pstmt.executeQuery();
 
             List<Member> members = new ArrayList<>();
@@ -180,10 +169,10 @@ public class JdbcMemberRepository implements MemberRepository {
             }
             return members;
 
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            throw exTranslator.translate("findAllMember", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -191,15 +180,12 @@ public class JdbcMemberRepository implements MemberRepository {
     @Override
     public Member updateByLoginId(String loginId, Member updatedMember) {
 
-
         String sql = "update loginId=?,password=?,name=?,nickName=? where loginId=?";
-
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, updatedMember.getLoginId());
@@ -209,23 +195,18 @@ public class JdbcMemberRepository implements MemberRepository {
             pstmt.setString(5, loginId);
 
             rs = pstmt.executeQuery();
-
             return updatedMember;
-
-        } catch (Exception e) {
-            log.error("{} : id의 update 실패",updatedMember.getLoginId());
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            log.error("{} : id의 update 실패", updatedMember.getLoginId());
+            throw exTranslator.translate("updateByLoginId", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
     @Override
     public void removeByLoginId(String loginId) {
-
-
         String sql = "delete from memberRepository where loginId=?";
-
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -235,14 +216,13 @@ public class JdbcMemberRepository implements MemberRepository {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, loginId);
-
             pstmt.executeUpdate();
 
-        } catch (Exception e) {
-            log.error("{} : id의 사용자 delete 실패",loginId);
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            log.error("{} : id의 사용자 delete 실패", loginId);
+            throw exTranslator.translate("removeByLoginId", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
@@ -250,17 +230,14 @@ public class JdbcMemberRepository implements MemberRepository {
     public Optional<Member> findByManageSeq(Long manageSeq) {
 
         String sql = "select * from memberRepository where manageSeq = ?";
-
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-
             conn = getConnection();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1,manageSeq);
-
+            pstmt.setLong(1, manageSeq);
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -274,17 +251,17 @@ public class JdbcMemberRepository implements MemberRepository {
             }
             return Optional.empty();
 
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }finally {
-            close(conn,pstmt,rs);
+        } catch (SQLException e) {
+            throw exTranslator.translate("findByManageSeq", sql, e);
+        } finally {
+            close(conn, pstmt, rs);
         }
     }
 
     private void close(Connection conn, PreparedStatement pstmt, ResultSet rs) {
         JdbcUtils.closeResultSet(rs);
         JdbcUtils.closeStatement(pstmt);
-        DataSourceUtils.releaseConnection(conn,dataSource);
+        DataSourceUtils.releaseConnection(conn, dataSource);
     }
 
     private Connection getConnection() {

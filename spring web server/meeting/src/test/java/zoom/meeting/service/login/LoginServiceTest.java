@@ -2,7 +2,6 @@ package zoom.meeting.service.login;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
-import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ public class LoginServiceTest {
 
         @Bean
         DataSource dataSource() {
-            return new DriverManagerDataSource("","","");
+            return new DriverManagerDataSource("", "", "");
         }
 
         @Bean
@@ -44,7 +43,7 @@ public class LoginServiceTest {
 
         @Bean
         LoginServiceImplementV1 loginServiceImplementV1() {
-            return new LoginServiceImplementV1(memberRepository(),new DataSourceTransactionManager(dataSource()));
+            return new LoginServiceImplementV1(memberRepository(), new DataSourceTransactionManager(dataSource()));
         }
     }
 

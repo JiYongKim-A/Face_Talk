@@ -33,7 +33,7 @@ public class SignUpTest {
 
         @Bean
         DataSource dataSource() {
-            return new DriverManagerDataSource("","","");
+            return new DriverManagerDataSource("", "", "");
         }
 
         @Bean

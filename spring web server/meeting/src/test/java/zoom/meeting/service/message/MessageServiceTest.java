@@ -42,7 +42,7 @@ public class MessageServiceTest {
 
         @Bean
         DataSource dataSource() {
-            return new DriverManagerDataSource("","","");
+            return new DriverManagerDataSource("", "", "");
         }
 
         @Bean
@@ -61,6 +61,7 @@ public class MessageServiceTest {
             return new MessageServiceImplementV1(messageRepository(), memberRepository(), new DataSourceTransactionManager(dataSource()));
         }
     }
+
     private long messageManageSeq;
 
     @Test
@@ -72,7 +73,7 @@ public class MessageServiceTest {
         Message message = new Message(mem1.getNickName(), mem2.getNickName(), getTime(), "test", "test", "N");
 
         //when
-        List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(),  "test", "test");
+        List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(), "test", "test");
         List<Message> messageList = messageRepository.findByNickNameAll(mem2.getNickName());
         long manageSeq = messageList.get(0).getManageSeq();
         messageManageSeq = manageSeq;
@@ -91,7 +92,7 @@ public class MessageServiceTest {
 
         //when
         String exceptionName = "TestingNickName";
-        List<String> check = messageService.sendMessage(exceptionName,mem2.getNickName(), "test", "test");
+        List<String> check = messageService.sendMessage(exceptionName, mem2.getNickName(), "test", "test");
         messageManageSeq = -1;
         //then
         Assertions.assertThat(check).isNotNull();
@@ -106,7 +107,7 @@ public class MessageServiceTest {
         Member mem2 = memberRepository.save(new Member("T2", "T2", "T2", "T2"));
 
         //when
-        List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(),  "test", "test");
+        List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(), "test", "test");
         List<Message> messageList = messageRepository.findByNickNameAll(mem2.getNickName());
         Message message = messageList.get(0);
         messageManageSeq = message.getManageSeq();
@@ -125,7 +126,7 @@ public class MessageServiceTest {
         Member mem2 = memberRepository.save(new Member("T2", "T2", "T2", "T2"));
 
         //when
-        List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(),  "test", "test");
+        List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(), "test", "test");
         List<Message> messageList = messageRepository.findByNickNameAll(mem2.getNickName());
         Message message = messageList.get(0);
         messageManageSeq = message.getManageSeq();
@@ -147,16 +148,17 @@ public class MessageServiceTest {
         Member mem2 = memberRepository.save(new Member("T2", "T2", "T2", "T2"));
 
         //when
-        List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(),  "test", "test");
+        List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(), "test", "test");
         List<Message> messageList = messageRepository.findByNickNameAll(mem2.getNickName());
         Message message = messageList.get(0);
         messageManageSeq = -1;
 
-        messageService.removeMessage(message.getManageSeq(),message.getRecipient());
+        messageService.removeMessage(message.getManageSeq(), message.getRecipient());
 
         //then
         Assertions.assertThat(messageRepository.findByManageSeq(message.getManageSeq())).isEmpty();
     }
+
     @AfterEach
     public void afterEach() {
         if (messageManageSeq != -1) {
