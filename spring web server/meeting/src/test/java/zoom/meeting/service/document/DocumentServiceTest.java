@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import zoom.meeting.domain.note.Note;
 import zoom.meeting.domain.repositoryImpl.JdbcNoteRepository;
@@ -36,7 +35,7 @@ public class DocumentServiceTest {
 
         @Bean
         DataSource dataSource() {
-            return new DriverManagerDataSource("","","");
+            return new DriverManagerDataSource("", "", "");
         }
 
         @Bean
@@ -46,7 +45,7 @@ public class DocumentServiceTest {
 
         @Bean
         DocumentService documentService() {
-            return new DocumentServiceImplementV1(noteRepository(), new DataSourceTransactionManager(dataSource()));
+            return new DocumentServiceImplementV1(noteRepository());
         }
     }
 
@@ -69,6 +68,4 @@ public class DocumentServiceTest {
     public void afterEach() {
         noteRepository.removeByManageSeq(noteManageSeq);
     }
-
-
 }
