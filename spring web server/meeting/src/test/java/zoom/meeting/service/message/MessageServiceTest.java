@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.message.Message;
@@ -57,8 +56,8 @@ public class MessageServiceTest {
 
 
         @Bean
-        MessageServiceImplementV1 messageServiceImplementV1() {
-            return new MessageServiceImplementV1(messageRepository(), memberRepository(), new DataSourceTransactionManager(dataSource()));
+        MessageService messageService() {
+            return new MessageServiceImplementV1(messageRepository(), memberRepository());
         }
     }
 
