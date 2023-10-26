@@ -17,9 +17,11 @@ import zoom.meeting.service.signUp.implement.SignUpServiceImplementV1;
 
 import javax.sql.DataSource;
 
+import static zoom.meeting.ConnectionConstForTest.*;
+
 @Slf4j
 @SpringBootTest
-public class SignUpTest {
+public class SignUpServiceTest {
 
     @Autowired
     private MemberRepository memberRepository;
@@ -32,7 +34,7 @@ public class SignUpTest {
 
         @Bean
         DataSource dataSource() {
-            return new DriverManagerDataSource("", "", "");
+            return new DriverManagerDataSource(URL, USERNAME, PASSWORD);
         }
 
         @Bean
@@ -42,7 +44,7 @@ public class SignUpTest {
 
 
         @Bean
-        SignUpServiceImplementV1 signUpServiceImplementV1() {
+        SignUpService signUpService() {
             return new SignUpServiceImplementV1(memberRepository());
         }
     }

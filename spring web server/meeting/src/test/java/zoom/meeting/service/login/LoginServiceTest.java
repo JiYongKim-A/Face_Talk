@@ -17,6 +17,8 @@ import zoom.meeting.service.login.Implement.LoginServiceImplementV1;
 
 import javax.sql.DataSource;
 
+import static zoom.meeting.ConnectionConstForTest.*;
+
 @Slf4j
 @SpringBootTest
 public class LoginServiceTest {
@@ -32,7 +34,7 @@ public class LoginServiceTest {
 
         @Bean
         DataSource dataSource() {
-            return new DriverManagerDataSource("","","");
+            return new DriverManagerDataSource(URL, USERNAME, PASSWORD);
         }
 
         @Bean
