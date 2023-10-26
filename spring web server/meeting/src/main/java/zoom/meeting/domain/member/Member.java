@@ -32,4 +32,12 @@ public class Member {
         this.name = name;
         this.nickName = nickName;
     }
+
+    public Member(long manageSeq,String loginId, String password, String name, String nickName) {
+        this.manageSeq = manageSeq;
+        this.loginId = loginId;
+        this.password = password;
+        this.name = name;
+        this.nickName = nickName;
+    }
 }
