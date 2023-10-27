@@ -8,8 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.message.Message;
-import zoom.meeting.domain.repositoryImpl.JdbcTemplateMemberRepository;
-import zoom.meeting.domain.repositoryImpl.JdbcTemplateMessageRepository;
+import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMemberRepository;
+import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMessageRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

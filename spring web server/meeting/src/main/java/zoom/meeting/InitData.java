@@ -5,12 +5,9 @@ import org.springframework.stereotype.Component;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.message.Message;
 import zoom.meeting.domain.note.Note;
-import zoom.meeting.domain.repositoryImpl.MemoryNoteRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.domain.repositoryInterface.MessageRepository;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
-
-import javax.annotation.PostConstruct;
 
 @Component
 @RequiredArgsConstructor

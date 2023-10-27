@@ -1,4 +1,4 @@
-package zoom.meeting.domain.repositoryImpl;
+package zoom.meeting.domain.repositoryImpl.memory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

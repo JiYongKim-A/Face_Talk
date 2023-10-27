@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import zoom.meeting.domain.member.Member;
-import zoom.meeting.domain.repositoryImpl.JdbcTemplateMemberRepository;
+import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMemberRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.service.signUp.implement.SignUpServiceImplementV1;
 

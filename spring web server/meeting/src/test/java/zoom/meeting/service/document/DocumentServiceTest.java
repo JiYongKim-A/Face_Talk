@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import zoom.meeting.domain.note.Note;
-import zoom.meeting.domain.repositoryImpl.JdbcNoteRepository;
+import zoom.meeting.domain.repositoryImpl.jdbc.JdbcNoteRepository;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
 import zoom.meeting.service.documentService.DocumentService;
 import zoom.meeting.service.documentService.implement.DocumentServiceImplementV1;

@@ -1,4 +1,4 @@
-package zoom.meeting.domain.repositoryImpl;
+package zoom.meeting.domain.repositoryImpl.memory;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
