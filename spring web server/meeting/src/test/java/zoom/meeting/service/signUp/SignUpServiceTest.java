@@ -1,5 +1,6 @@
 package zoom.meeting.service.signUp;
 
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.repositoryImpl.JdbcTemplateMemberRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
@@ -34,7 +34,13 @@ public class SignUpServiceTest {
 
         @Bean
         DataSource dataSource() {
-            return new DriverManagerDataSource(URL, USERNAME, PASSWORD);
+            HikariDataSource dataSource = new HikariDataSource();
+            dataSource.setJdbcUrl(URL);
+            dataSource.setUsername(USERNAME);
+            dataSource.setPassword(PASSWORD);
+            dataSource.setPoolName("myPool");
+            dataSource.setMaximumPoolSize(10);
+            return dataSource;
         }
 
         @Bean
