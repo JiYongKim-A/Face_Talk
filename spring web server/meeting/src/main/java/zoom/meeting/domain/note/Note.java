@@ -49,4 +49,13 @@ public class Note {
         this.title = title;
         this.text = text;
     }
+    public Note(Long manageSeq,String userUUID, String roomUUID, String date, String title, String nickName, String text) {
+        this.manageSeq = manageSeq;
+        this.userUUID = userUUID;
+        this.roomUUID = roomUUID;
+        this.nickName = nickName;
+        this.date = date;
+        this.title = title;
+        this.text = text;
+    }
 }
