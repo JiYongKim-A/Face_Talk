@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import zoom.meeting.domain.member.Member;
-import zoom.meeting.domain.repositoryImpl.JdbcMemberRepository;
+import zoom.meeting.domain.repositoryImpl.JdbcTemplateMemberRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.service.signUp.implement.SignUpServiceImplementV1;
 
@@ -38,8 +38,8 @@ public class SignUpServiceTest {
         }
 
         @Bean
-        JdbcMemberRepository memberRepository() {
-            return new JdbcMemberRepository(dataSource());
+        JdbcTemplateMemberRepository memberRepository() {
+            return new JdbcTemplateMemberRepository(dataSource());
         }
 
 

@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.message.Message;
-import zoom.meeting.domain.repositoryImpl.JdbcMemberRepository;
-import zoom.meeting.domain.repositoryImpl.JdbcMessageRepository;
+import zoom.meeting.domain.repositoryImpl.JdbcTemplateMemberRepository;
+import zoom.meeting.domain.repositoryImpl.JdbcTemplateMessageRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.domain.repositoryInterface.MessageRepository;
 import zoom.meeting.service.message.implement.MessageServiceImplementV1;
@@ -46,12 +46,12 @@ public class MessageServiceTest {
 
         @Bean
         MemberRepository memberRepository() {
-            return new JdbcMemberRepository(dataSource());
+            return new JdbcTemplateMemberRepository(dataSource());
         }
 
         @Bean
         MessageRepository messageRepository() {
-            return new JdbcMessageRepository(dataSource());
+            return new JdbcTemplateMessageRepository(dataSource());
         }
 
 
