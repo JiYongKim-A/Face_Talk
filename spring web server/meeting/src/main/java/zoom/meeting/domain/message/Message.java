@@ -26,4 +26,14 @@ public class Message {
         this.message = message;
         this.isRead = isRead;
     }
+
+    public Message(Long manageSeq,String sender, String recipient, String date, String title, String message, String isRead) {
+        this.manageSeq = manageSeq;
+        this.sender = sender;
+        this.recipient = recipient;
+        this.date = date;
+        this.title = title;
+        this.message = message;
+        this.isRead = isRead;
+    }
 }
