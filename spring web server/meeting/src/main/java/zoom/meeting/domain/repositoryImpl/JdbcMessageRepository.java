@@ -1,7 +1,6 @@
 package zoom.meeting.domain.repositoryImpl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@Primary
 @Repository
 public class JdbcMessageRepository implements MessageRepository {
     private final DataSource dataSource;
