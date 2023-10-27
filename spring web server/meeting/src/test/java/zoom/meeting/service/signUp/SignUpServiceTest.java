@@ -44,7 +44,7 @@ public class SignUpServiceTest {
         }
 
         @Bean
-        JdbcTemplateMemberRepository memberRepository() {
+        MemberRepository memberRepository() {
             return new JdbcTemplateMemberRepository(dataSource());
         }
 
