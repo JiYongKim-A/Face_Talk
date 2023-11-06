@@ -1,7 +1,6 @@
 package zoom.meeting.domain.repositoryImpl.jdbcTemplate;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,7 +15,6 @@ import java.sql.Statement;
 import java.util.*;
 
 @Slf4j
-@Primary
 @Repository
 public class JdbcTemplateMemberRepository implements MemberRepository {
     private final JdbcTemplate jdbcTemplate;
