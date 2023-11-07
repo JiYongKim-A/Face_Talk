@@ -1,14 +1,18 @@
 package zoom.meeting.domain.member;
+
 import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Data
-@Getter @Setter
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class Member {
     /**
      * ==회원==
-     *
+     * <p>
      * 관리번호
      * login ID
      * login PW
@@ -22,7 +26,7 @@ public class Member {
 
     private String password;
 
-    private  String name;
+    private String name;
 
     private String nickName;
 
@@ -33,7 +37,7 @@ public class Member {
         this.nickName = nickName;
     }
 
-    public Member(long manageSeq,String loginId, String password, String name, String nickName) {
+    public Member(long manageSeq, String loginId, String password, String name, String nickName) {
         this.manageSeq = manageSeq;
         this.loginId = loginId;
         this.password = password;

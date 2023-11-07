@@ -7,7 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import zoom.meeting.domain.member.Member;
-import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMemberRepository;
+import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMemberRepository;
+import zoom.meeting.domain.repositoryInterface.MemberRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,7 @@ import static zoom.meeting.ConnectionConstForTest.*;
 
 @Slf4j
 public class MemberRepositoryTest {
-    JdbcTemplateMemberRepository memberRepository;
+    MemberRepository memberRepository;
 
     @BeforeEach
     void beforeEach() {
@@ -27,7 +28,7 @@ public class MemberRepositoryTest {
         dataSource.setPassword(PASSWORD);
         dataSource.setPoolName("myPool");
         dataSource.setMaximumPoolSize(10);
-        memberRepository = new JdbcTemplateMemberRepository(dataSource);
+        memberRepository = new NamedParameterMemberRepository(dataSource);
     }
 
     @Test
