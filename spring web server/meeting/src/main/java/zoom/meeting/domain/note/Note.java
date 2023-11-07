@@ -2,6 +2,7 @@ package zoom.meeting.domain.note;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 @Getter @Setter
+@RequiredArgsConstructor
 public class Note {
     /**
      * ==정리노트==

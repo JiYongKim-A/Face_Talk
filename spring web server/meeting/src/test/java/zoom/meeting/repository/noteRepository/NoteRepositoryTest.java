@@ -8,8 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.note.Note;
-import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMemberRepository;
-import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateNoteRepository;
+import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMemberRepository;
+import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterNoteRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
 
@@ -35,8 +35,8 @@ public class NoteRepositoryTest {
         dataSource.setPassword(PASSWORD);
         dataSource.setPoolName("myPool");
         dataSource.setMaximumPoolSize(10);
-        noteRepository = new JdbcTemplateNoteRepository(dataSource);
-        memberRepository = new JdbcTemplateMemberRepository(dataSource);
+        noteRepository = new NamedParameterNoteRepository(dataSource);
+        memberRepository = new NamedParameterMemberRepository(dataSource);
     }
 
     @Test
