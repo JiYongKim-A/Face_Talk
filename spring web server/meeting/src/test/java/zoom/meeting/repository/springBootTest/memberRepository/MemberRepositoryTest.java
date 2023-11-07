@@ -37,6 +37,8 @@ public class MemberRepositoryTest {
 
         //then (nickName)
         assertThat(allNickName).contains(t1.getNickName());
+        Optional<Member> findMem = memberRepository.findByLoginId(t1.getLoginId());
+        assertThat(t1).isEqualTo(findMem.get());
         log.info("memberManageSeq = {}", t1.getManageSeq());
 
     }
