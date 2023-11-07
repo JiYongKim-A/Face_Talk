@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="zoom.meeting.domain.repositoryImpl.myBatis.MemberRepositoryMapper">
+<mapper namespace="zoom.meeting.domain.repositoryImpl.myBatis.member.MemberRepositoryMapper">
     <insert id="save" useGeneratedKeys="true" keyProperty="manageSeq">
         insert into memberRepository (loginId,password,name,nickName)
         values (#{loginId}, #{password}, #{name},#{nickName})

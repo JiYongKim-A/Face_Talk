@@ -1,4 +1,4 @@
-package zoom.meeting.domain.repositoryImpl.myBatis;
+package zoom.meeting.domain.repositoryImpl.myBatis.member;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -1,4 +1,4 @@
-package zoom.meeting.domain.repositoryImpl.myBatis;
+package zoom.meeting.domain.repositoryImpl.myBatis.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
