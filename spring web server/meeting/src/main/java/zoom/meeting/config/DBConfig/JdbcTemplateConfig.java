@@ -3,9 +3,9 @@ package zoom.meeting.config.DBConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMemberRepository;
-import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMessageRepository;
-import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateNoteRepository;
+import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMemberRepository;
+import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMessageRepository;
+import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterNoteRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.domain.repositoryInterface.MessageRepository;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
@@ -29,17 +29,17 @@ public class JdbcTemplateConfig {
 
     @Bean
     MemberRepository memberRepository() {
-        return new JdbcTemplateMemberRepository(dataSource);
+        return new NamedParameterMemberRepository(dataSource);
     }
 
     @Bean
     MessageRepository messageRepository() {
-        return new JdbcTemplateMessageRepository(dataSource);
+        return new NamedParameterMessageRepository(dataSource);
     }
 
     @Bean
     NoteRepository noteRepository() {
-        return new JdbcTemplateNoteRepository(dataSource);
+        return new NamedParameterNoteRepository(dataSource);
     }
 
 
