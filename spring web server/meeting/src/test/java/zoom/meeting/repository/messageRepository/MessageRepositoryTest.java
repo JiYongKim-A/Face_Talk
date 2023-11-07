@@ -8,8 +8,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.message.Message;
-import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMemberRepository;
-import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMessageRepository;
+import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMemberRepository;
+import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMessageRepository;
+import zoom.meeting.domain.repositoryInterface.MemberRepository;
+import zoom.meeting.domain.repositoryInterface.MessageRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,8 +22,8 @@ import static zoom.meeting.ConnectionConstForTest.*;
 
 @Slf4j
 public class MessageRepositoryTest {
-    JdbcTemplateMessageRepository messageRepository;
-    JdbcTemplateMemberRepository memberRepository;
+    MessageRepository messageRepository;
+    MemberRepository memberRepository;
     private long messageManageSeq;
 
     @BeforeEach
@@ -32,8 +34,8 @@ public class MessageRepositoryTest {
         dataSource.setPassword(PASSWORD);
         dataSource.setPoolName("myPool");
         dataSource.setMaximumPoolSize(10);
-        messageRepository = new JdbcTemplateMessageRepository(dataSource);
-        memberRepository = new JdbcTemplateMemberRepository(dataSource);
+        messageRepository = new NamedParameterMessageRepository(dataSource);
+        memberRepository = new NamedParameterMemberRepository(dataSource);
     }
 
     @Test

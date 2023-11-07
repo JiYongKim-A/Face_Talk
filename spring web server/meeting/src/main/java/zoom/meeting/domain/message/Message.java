@@ -2,10 +2,12 @@ package zoom.meeting.domain.message;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Data
 @Getter @Setter
+@RequiredArgsConstructor
 public class Message {
 
     private long manageSeq; // 관리 번호
