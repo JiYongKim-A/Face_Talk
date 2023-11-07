@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="zoom.meeting.domain.repositoryImpl.myBatis.note.NoteRepositoryMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="manageSeq">
+        insert into noteRepository (nickName, date, title, content, userUUID, roomUUID)
+        values(#{nickName},#{date},#{title},#{text},#{userUUID},#{roomUUID})
+    </insert>
+
+    <select id="findAll" resultType="Note">
+        select manageSeq,nickName, date, title, content as text, userUUID, roomUUID
+        from noteRepository
+    </select>
+
+    <select id="findByNickNameAll" resultType="Note">
+        select manageSeq,nickName, date, title, content as text, userUUID, roomUUID
+        from noteRepository where nickName = #{nickName}
+    </select>
+
+    <select id="findByUserUUID" resultType="Note">
+        select manageSeq,nickName, date, title, content as text, userUUID, roomUUID
+        from noteRepository
+        where userUUID = #{userUUID}
+    </select>
+
+    <select id="findByManageSeq" resultType="Note">
+        select manageSeq,nickName, date, title, content as text, userUUID, roomUUID
+        from noteRepository
+        where manageSeq = #{manageSeq}
+    </select>
+
+
+    <update id="updateByManageSeq">
+        update noteRepository
+        set nickName=#{updatedNote.nickName},date=#{updatedNote.date},title=#{updatedNote.title},content=#{updatedNote.text},userUUID=#{updatedNote.userUUID},roomUUID=#{updatedNote.roomUUID}
+        where manageSeq=#{manageSeq}
+    </update>
+
+    <delete id="removeByManageSeq">
+        delete from noteRepository where manageSeq=#{manageSeq}
+    </delete>
+
+</mapper>
