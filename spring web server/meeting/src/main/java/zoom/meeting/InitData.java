@@ -1,7 +1,8 @@
 package zoom.meeting;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.message.Message;
 import zoom.meeting.domain.note.Note;
@@ -9,14 +10,13 @@ import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.domain.repositoryInterface.MessageRepository;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
 
-@Component
 @RequiredArgsConstructor
 public class InitData {
     private final MemberRepository memberRepository;
     private final NoteRepository noteRepository;
     private final MessageRepository messageRepository;
 
-//    @PostConstruct
+    @EventListener(ApplicationReadyEvent.class)
     public void init() {
 
        // init Member
