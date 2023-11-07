@@ -1,4 +1,4 @@
-package zoom.meeting.repository.messageRepository;
+package zoom.meeting.repository.functionTest.messageRepository;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static zoom.meeting.repository.repositoryConnectionConst.ConnectionConstForTest.*;
+import static zoom.meeting.repository.functionTest.repositoryConnectionConst.ConnectionConstForTest.*;
 
 @Slf4j
 public class MessageRepositoryTest {

@@ -1,4 +1,4 @@
-package zoom.meeting.repository.memberRepository;
+package zoom.meeting.repository.functionTest.memberRepository;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static zoom.meeting.repository.repositoryConnectionConst.ConnectionConstForTest.*;
+import static zoom.meeting.repository.functionTest.repositoryConnectionConst.ConnectionConstForTest.*;
 
 @Slf4j
 public class MemberRepositoryTest {
@@ -35,7 +34,6 @@ public class MemberRepositoryTest {
         dataSource.setPoolName("myPool");
         dataSource.setMaximumPoolSize(10);
         memberRepository = new NamedParameterMemberRepository(dataSource);
-        txManager = new DataSourceTransactionManager(dataSource);
         this.status = txManager.getTransaction(new DefaultTransactionDefinition());
     }
 

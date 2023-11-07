@@ -1,4 +1,4 @@
-package zoom.meeting.repository.noteRepository;
+package zoom.meeting.repository.functionTest.noteRepository;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +16,7 @@ import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParame
 import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterNoteRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
+import zoom.meeting.repository.functionTest.repositoryConnectionConst.ConnectionConstForTest;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +24,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
-import static zoom.meeting.repository.repositoryConnectionConst.ConnectionConstForTest.*;
 
 @Slf4j
 public class NoteRepositoryTest {
@@ -35,9 +35,9 @@ public class NoteRepositoryTest {
     @BeforeEach
     void beforeEach() {
         HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl(URL);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
+        dataSource.setJdbcUrl(ConnectionConstForTest.URL);
+        dataSource.setUsername(ConnectionConstForTest.USERNAME);
+        dataSource.setPassword(ConnectionConstForTest.PASSWORD);
         dataSource.setPoolName("myPool");
         dataSource.setMaximumPoolSize(10);
         noteRepository = new NamedParameterNoteRepository(dataSource);
