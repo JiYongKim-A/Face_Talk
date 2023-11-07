@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zoom.meeting.domain.repositoryImpl.myBatis.message.MessageRepositoryMapper">
+    <insert id="send" useGeneratedKeys="true" keyProperty="manageSeq">
+        insert into messageRepository(sender,recipient,date,title,message,isRead)
+        values(#{sender},#{recipient},#{date},#{title},#{message},#{isRead})
+    </insert>
+
+    <select id="findByNickNameAll" resultType="Message">
+        select * from messageRepository where recipient = #{nickName}
+    </select>
+
+    <select id="findByManageSeq" resultType="Message">
+        select * from messageRepository where manageSeq = #{manageSeq}
+    </select>
+
+    <delete id="removeByManageSeq">
+        delete from messageRepository where manageSeq=#{manageSeq}
+    </delete>
+    <update id="isReadUpdate">
+        update messageRepository set isRead=#{isRead} where manageSeq=#{manageSeq}
+    </update>
+</mapper>
