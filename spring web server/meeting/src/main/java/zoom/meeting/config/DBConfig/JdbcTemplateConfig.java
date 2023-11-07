@@ -1,8 +1,6 @@
 package zoom.meeting.config.DBConfig;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import zoom.meeting.domain.repositoryImpl.jdbcTemplate.JdbcTemplateMemberRepository;
@@ -24,34 +22,24 @@ import javax.sql.DataSource;
 
 
 @Configuration
+@RequiredArgsConstructor
 public class JdbcTemplateConfig {
 
-    // DB config
-    @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.hikari")
-    public HikariConfig hikariConfig() {
-        return new HikariConfig();
-    }
+    private final DataSource dataSource;
 
-    @Bean
-    public DataSource dataSource() {
-        return new HikariDataSource(hikariConfig());
-    }
-
-    // repository config
     @Bean
     MemberRepository memberRepository() {
-        return new JdbcTemplateMemberRepository(dataSource());
+        return new JdbcTemplateMemberRepository(dataSource);
     }
 
     @Bean
     MessageRepository messageRepository() {
-        return new JdbcTemplateMessageRepository(dataSource());
+        return new JdbcTemplateMessageRepository(dataSource);
     }
 
     @Bean
     NoteRepository noteRepository() {
-        return new JdbcTemplateNoteRepository(dataSource());
+        return new JdbcTemplateNoteRepository(dataSource);
     }
 
 
