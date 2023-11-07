@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="zoom.meeting.domain.repositoryImpl.myBatis.MemberRepositoryMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="manageSeq">
+        insert into memberRepository (loginId,password,name,nickName)
+        values (#{loginId}, #{password}, #{name},#{nickName})
+    </insert>
+
+    <select id="findByLoginId" resultType="Member">
+        select manageSeq, loginId, password, name, nickName
+        from memberRepository
+        where loginId = #{loginId}
+    </select>
+
+    <select id="findAll" resultType="Member">
+        select manageSeq, loginId, password, name, nickName
+        from memberRepository
+    </select>
+
+    <update id="updateByLoginId">
+        update memberRepository
+        set loginId=#{updatedMember.loginId},password=#{updatedMember.password},name=#{updatedMember.name},nickName=#{updatedMember.nickName}
+        where loginId = #{beforeLoginId}
+    </update>
+
+    <delete id="removeByLoginId">
+        delete from memberRepository where loginId=#{loginId}
+    </delete>
+
+    <select id="findByManageSeq" resultType="Member">
+        select manageSeq, loginId, password, name, nickName
+        from memberRepository
+        where manageSeq = #{manageSeq}
+    </select>
+
+    <select id="allLoginId" resultType="String">
+        select loginId from memberRepository
+    </select>
+
+    <select id="allNickName" resultType="String">
+        select nickName from memberRepository
+    </select>
+
+</mapper>
