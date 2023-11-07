@@ -30,7 +30,7 @@ create table noteRepository
     date varchar(11),
     title varchar(10),
     content varchar(10),
-    userUUID varchar(10),
-    roomUUID varchar(10),
+    userUUID varchar(36),
+    roomUUID varchar(36),
     primary key (manageSeq)
 );
