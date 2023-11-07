@@ -2,11 +2,11 @@ package zoom.meeting.service.message;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.message.Message;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
+@Transactional
 @SpringBootTest
 public class MessageServiceTest {
 
@@ -30,8 +31,6 @@ public class MessageServiceTest {
     private MessageService messageService;
 
 
-    private long messageManageSeq;
-
     @Test
     @DisplayName("MessageServiceImplementV1 Send Test 1")
     public void MessageServiceSendTest1() {
@@ -44,7 +43,6 @@ public class MessageServiceTest {
         List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(), "test", "test");
         List<Message> messageList = messageRepository.findByNickNameAll(mem2.getNickName());
         long manageSeq = messageList.get(0).getManageSeq();
-        messageManageSeq = manageSeq;
         message.setManageSeq(manageSeq);
 
         //then
@@ -61,7 +59,7 @@ public class MessageServiceTest {
         //when
         String exceptionName = "TestingNickName";
         List<String> check = messageService.sendMessage(exceptionName, mem2.getNickName(), "test", "test");
-        messageManageSeq = -1;
+
         //then
         Assertions.assertThat(check).isNotNull();
         Assertions.assertThat(check).contains(exceptionName);
@@ -78,7 +76,6 @@ public class MessageServiceTest {
         List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(), "test", "test");
         List<Message> messageList = messageRepository.findByNickNameAll(mem2.getNickName());
         Message message = messageList.get(0);
-        messageManageSeq = message.getManageSeq();
 
         //then
         Assertions.assertThat(check).isNull();
@@ -97,7 +94,6 @@ public class MessageServiceTest {
         List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(), "test", "test");
         List<Message> messageList = messageRepository.findByNickNameAll(mem2.getNickName());
         Message message = messageList.get(0);
-        messageManageSeq = message.getManageSeq();
 
         //then
         Assertions.assertThat(check).isNull();
@@ -117,21 +113,10 @@ public class MessageServiceTest {
         List<String> check = messageService.sendMessage(mem2.getNickName(), mem1.getNickName(), "test", "test");
         List<Message> messageList = messageRepository.findByNickNameAll(mem2.getNickName());
         Message message = messageList.get(0);
-        messageManageSeq = -1;
-
         messageService.removeMessage(message.getManageSeq(), message.getRecipient());
 
         //then
         Assertions.assertThat(messageRepository.findByManageSeq(message.getManageSeq())).isEmpty();
-    }
-
-    @AfterEach
-    public void afterEach() {
-        if (messageManageSeq != -1) {
-            messageRepository.removeByManageSeq(messageManageSeq);
-        }
-        memberRepository.removeByLoginId("T1");
-        memberRepository.removeByLoginId("T2");
     }
 
     private String getTime() {
@@ -139,5 +124,4 @@ public class MessageServiceTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm");
         return now.format(formatter);
     }
-
 }
