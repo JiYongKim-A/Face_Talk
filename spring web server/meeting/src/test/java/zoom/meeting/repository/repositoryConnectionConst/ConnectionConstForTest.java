@@ -1,4 +1,4 @@
-package zoom.meeting;
+package zoom.meeting.repository.repositoryConnectionConst;
 
 public abstract class ConnectionConstForTest {
     public static final String URL = "";

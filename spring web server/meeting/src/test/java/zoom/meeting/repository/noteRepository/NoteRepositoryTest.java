@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
-import static zoom.meeting.ConnectionConstForTest.*;
+import static zoom.meeting.repository.repositoryConnectionConst.ConnectionConstForTest.*;
 
 @Slf4j
 public class NoteRepositoryTest {
