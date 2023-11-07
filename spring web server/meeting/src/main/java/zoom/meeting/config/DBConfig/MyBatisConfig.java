@@ -5,7 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import zoom.meeting.domain.repositoryImpl.myBatis.member.MemberRepositoryMapper;
 import zoom.meeting.domain.repositoryImpl.myBatis.member.MyBatisMemberRepository;
-import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMessageRepository;
+import zoom.meeting.domain.repositoryImpl.myBatis.message.MessageRepositoryMapper;
+import zoom.meeting.domain.repositoryImpl.myBatis.message.MyBatisMessageRepository;
 import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterNoteRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
 import zoom.meeting.domain.repositoryInterface.MessageRepository;
@@ -27,6 +28,7 @@ public class MyBatisConfig {
 
     private final DataSource dataSource;
     private final MemberRepositoryMapper memberRepositoryMapper;
+    private final MessageRepositoryMapper messageRepositoryMapper;
 
     // repository config
 
@@ -37,7 +39,7 @@ public class MyBatisConfig {
 
     @Bean
     MessageRepository messageRepository() {
-        return new NamedParameterMessageRepository(dataSource);
+        return new MyBatisMessageRepository(messageRepositoryMapper);
     }
 
     @Bean
