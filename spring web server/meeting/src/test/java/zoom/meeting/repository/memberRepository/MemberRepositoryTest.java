@@ -6,6 +6,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMemberRepository;
 import zoom.meeting.domain.repositoryInterface.MemberRepository;
@@ -19,6 +23,8 @@ import static zoom.meeting.repository.repositoryConnectionConst.ConnectionConstF
 @Slf4j
 public class MemberRepositoryTest {
     MemberRepository memberRepository;
+    TransactionStatus status;
+    PlatformTransactionManager txManager;
 
     @BeforeEach
     void beforeEach() {
@@ -29,6 +35,8 @@ public class MemberRepositoryTest {
         dataSource.setPoolName("myPool");
         dataSource.setMaximumPoolSize(10);
         memberRepository = new NamedParameterMemberRepository(dataSource);
+        txManager = new DataSourceTransactionManager(dataSource);
+        this.status = txManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Test
@@ -150,6 +158,6 @@ public class MemberRepositoryTest {
 
     @AfterEach
     public void afterEach() {
-        memberRepository.removeByLoginId("T1");
+        txManager.rollback(status);
     }
 }

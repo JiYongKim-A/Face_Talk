@@ -6,6 +6,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.note.Note;
 import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMemberRepository;
@@ -25,7 +29,8 @@ import static zoom.meeting.repository.repositoryConnectionConst.ConnectionConstF
 public class NoteRepositoryTest {
     NoteRepository noteRepository;
     MemberRepository memberRepository;
-    long noteManageSeq;
+    TransactionStatus status;
+    PlatformTransactionManager txManager;
 
     @BeforeEach
     void beforeEach() {
@@ -37,6 +42,8 @@ public class NoteRepositoryTest {
         dataSource.setMaximumPoolSize(10);
         noteRepository = new NamedParameterNoteRepository(dataSource);
         memberRepository = new NamedParameterMemberRepository(dataSource);
+        txManager = new DataSourceTransactionManager(dataSource);
+        this.status = txManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Test
@@ -49,7 +56,6 @@ public class NoteRepositoryTest {
 
         //when
         Note note = noteRepository.save(new Note(userUUID, roomUUID, getTime(), "test", t1.getNickName(), "test"));
-        noteManageSeq = note.getManageSeq();
         Note findNote = noteRepository.findByManageSeq(note.getManageSeq()).get();
         //then
         assertThat(note).isEqualTo(findNote);
@@ -67,7 +73,6 @@ public class NoteRepositoryTest {
 
         //when
         Note note = noteRepository.save(new Note(userUUID, roomUUID, getTime(), "test", t1.getNickName(), "test"));
-        noteManageSeq = note.getManageSeq();
         List<Note> noteList = noteRepository.findByNickNameAll(t1.getNickName());
         //then
         assertThat(noteList).contains(note);
@@ -84,7 +89,6 @@ public class NoteRepositoryTest {
 
         //when
         Note note = noteRepository.save(new Note(userUUID, roomUUID, getTime(), "test", t1.getNickName(), "test"));
-        noteManageSeq = note.getManageSeq();
         Note findNote = noteRepository.findByUserUUID(userUUID).get();
         //then
         assertThat(note).isEqualTo(findNote);
@@ -100,7 +104,6 @@ public class NoteRepositoryTest {
 
         //when
         Note note = noteRepository.save(new Note(userUUID, roomUUID, getTime(), "test", t1.getNickName(), "test"));
-        noteManageSeq = note.getManageSeq();
         Note findNote = noteRepository.findByManageSeq(note.getManageSeq()).get();
         //then
         assertThat(note).isEqualTo(findNote);
@@ -116,7 +119,6 @@ public class NoteRepositoryTest {
 
         //when
         Note note = noteRepository.save(new Note(userUUID, roomUUID, getTime(), "test", t1.getNickName(), "test"));
-        noteManageSeq = note.getManageSeq();
         noteRepository.updateByManageSeq(note.getManageSeq(), new Note(userUUID, roomUUID, getTime(), "test2", t1.getNickName(), "test2"));
         Note findNote = noteRepository.findByManageSeq(note.getManageSeq()).get();
         //then
@@ -133,7 +135,6 @@ public class NoteRepositoryTest {
 
         //when
         Note note = noteRepository.save(new Note(userUUID, roomUUID, getTime(), "test", t1.getNickName(), "test"));
-        noteManageSeq = -1;
         noteRepository.removeByManageSeq(note.getManageSeq());
         //then
         assertThat(noteRepository.findByManageSeq(note.getManageSeq())).isEmpty();
@@ -141,10 +142,7 @@ public class NoteRepositoryTest {
 
     @AfterEach
     void afterEach() {
-        memberRepository.removeByLoginId("T1");
-        if (noteManageSeq != -1) {
-            noteRepository.removeByManageSeq(noteManageSeq);
-        }
+        txManager.rollback(status);
     }
 
     private String getTime() {

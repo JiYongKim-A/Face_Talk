@@ -6,6 +6,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import zoom.meeting.domain.member.Member;
 import zoom.meeting.domain.message.Message;
 import zoom.meeting.domain.repositoryImpl.namedParameterJdbcTemplate.NamedParameterMemberRepository;
@@ -24,7 +28,9 @@ import static zoom.meeting.repository.repositoryConnectionConst.ConnectionConstF
 public class MessageRepositoryTest {
     MessageRepository messageRepository;
     MemberRepository memberRepository;
-    private long messageManageSeq;
+    TransactionStatus status;
+    PlatformTransactionManager txManager;
+
 
     @BeforeEach
     void beforeEach() {
@@ -36,6 +42,8 @@ public class MessageRepositoryTest {
         dataSource.setMaximumPoolSize(10);
         messageRepository = new NamedParameterMessageRepository(dataSource);
         memberRepository = new NamedParameterMemberRepository(dataSource);
+        txManager = new DataSourceTransactionManager(dataSource);
+        this.status = txManager.getTransaction(new DefaultTransactionDefinition());
     }
 
     @Test
@@ -48,7 +56,6 @@ public class MessageRepositoryTest {
 
         //when
         Message sendMessage = messageRepository.send(message);
-        messageManageSeq = sendMessage.getManageSeq();
         //then
         assertThat(messageRepository.findByManageSeq(sendMessage.getManageSeq()).get())
                 .isEqualTo(sendMessage);
@@ -63,7 +70,6 @@ public class MessageRepositoryTest {
         Message message = new Message(t1.getNickName(), t2.getNickName(), getTime(), "test", "test", "N");
         //when
         Message sendMessage = messageRepository.send(message);
-        messageManageSeq = sendMessage.getManageSeq();
         //then
         List<Message> byNickNameAll = messageRepository.findByNickNameAll(t2.getNickName());
         for (Message m : byNickNameAll) {
@@ -82,7 +88,6 @@ public class MessageRepositoryTest {
         Message message = new Message(t1.getNickName(), t2.getNickName(), getTime(), "test", "test", "N");
         //when
         Message sendMessage = messageRepository.send(message);
-        messageManageSeq = sendMessage.getManageSeq();
         //then
         assertThat(messageRepository.findByManageSeq(sendMessage.getManageSeq()).get().getManageSeq()).isEqualTo(sendMessage.getManageSeq());
     }
@@ -96,12 +101,10 @@ public class MessageRepositoryTest {
         Message message = new Message(t1.getNickName(), t2.getNickName(), getTime(), "test", "test", "N");
         //when
         Message sendMessage = messageRepository.send(message);
-        messageManageSeq = -1;
         messageRepository.removeByManageSeq(sendMessage.getManageSeq());
         //then
         assertThat(messageRepository.findByManageSeq(sendMessage.getManageSeq()))
                 .isEmpty();
-
     }
 
     @Test
@@ -113,7 +116,6 @@ public class MessageRepositoryTest {
         Message message = new Message(t1.getNickName(), t2.getNickName(), getTime(), "test", "test", "N");
         //when
         Message sendMessage = messageRepository.send(message);
-        messageManageSeq = sendMessage.getManageSeq();
         //then
         assertThat(messageRepository.checkNewMessage(t2.getNickName())).isEqualTo("Y");
     }
@@ -127,7 +129,6 @@ public class MessageRepositoryTest {
         Message message = new Message(t1.getNickName(), t2.getNickName(), getTime(), "test", "test", "N");
         //when
         Message sendMessage = messageRepository.send(message);
-        messageManageSeq = sendMessage.getManageSeq();
         messageRepository.isReadUpdate(sendMessage.getManageSeq());
         //then
         assertThat(messageRepository.checkNewMessage(t2.getNickName())).isEqualTo("N");
@@ -135,11 +136,7 @@ public class MessageRepositoryTest {
 
     @AfterEach
     void afterEach() {
-        if (messageManageSeq != -1) {
-            messageRepository.removeByManageSeq(messageManageSeq);
-        }
-        memberRepository.removeByLoginId("T1");
-        memberRepository.removeByLoginId("T2");
+        txManager.rollback(status);
     }
 
     private String getTime() {
