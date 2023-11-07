@@ -7,17 +7,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import zoom.meeting.domain.note.Note;
-import zoom.meeting.domain.repositoryImpl.jdbc.JdbcNoteRepository;
 import zoom.meeting.domain.repositoryInterface.NoteRepository;
 import zoom.meeting.service.documentService.DocumentService;
-import zoom.meeting.service.documentService.implement.DocumentServiceImplementV1;
 
 
-import javax.sql.DataSource;
 import java.util.List;
 
 @Slf4j
@@ -29,25 +23,6 @@ public class DocumentServiceTest {
 
     @Autowired
     private DocumentService documentService;
-
-    @TestConfiguration
-    static class testConfig {
-
-        @Bean
-        DataSource dataSource() {
-            return new DriverManagerDataSource("", "", "");
-        }
-
-        @Bean
-        NoteRepository noteRepository() {
-            return new JdbcNoteRepository(dataSource());
-        }
-
-        @Bean
-        DocumentService documentService() {
-            return new DocumentServiceImplementV1(noteRepository());
-        }
-    }
 
     private long noteManageSeq;
 
