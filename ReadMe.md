@@ -99,10 +99,6 @@ ex)
 
 <br>
 
-## 📺 프로젝트 실행 화면
-<img width="1440" alt="스크린샷 2022-11-07 오후 5 08 49" src="https://user-images.githubusercontent.com/81874493/200261160-c0019141-1ab4-4f53-8e18-4667680669e8.png">
-
-<br>
 
 ## 📔 개발 관련 참고 문서
 
